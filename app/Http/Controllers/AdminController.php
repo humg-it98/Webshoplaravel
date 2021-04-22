@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
+use Session;
+use App\Http\Requests;
+use Illuminate\Support\Facades\Redirect;
+session_start();
 
 class AdminController extends Controller
 {
@@ -34,8 +39,15 @@ class AdminController extends Controller
             return view('admin.dashboard');
         }else
         {
-            Session::put('message','Tai khoan hoac mat khau bi sai, vui long nhap lai');
+            Session::put('message','Tai khoan hoac mat khẩu bi sai, vui lòng kiểm tra lai');
             return Redirect::to('/admin');
         }
+    }
+    public function logout(){
+
+        Session::put('admin_name',null);
+        Session::put('admin_id',null);
+        return Redirect::to('/admin');
+
     }
 }
