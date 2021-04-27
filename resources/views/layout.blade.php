@@ -170,19 +170,15 @@
             <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".js-navbar-collapse"> <span class="i-bar"><i class="fa fa-bars"></i></span></button>
             <div class="collapse navbar-collapse js-navbar-collapse">
               <ul id="menu" class="nav navbar-nav">
-                <li> <a href="{{URL::to('/trang-chu')}}">Home</a></li>
+                <li> <a href="{{URL::to('/')}}">Home</a></li>
                 <li class="dropdown mega-dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">Collection </a>
                   <ul class="dropdown-menu mega-dropdown-menu row">
                     <li class="col-md-3">
                       <ul>
                         <li class="dropdown-header">Women's</li>
+
                         <li><a href="#">Unique Features</a></li>
-                        <li><a href="#">Image Responsive</a></li>
-                        <li><a href="#">Auto Carousel</a></li>
-                        <li><a href="#">Newsletter Form</a></li>
-                        <li><a href="#">Four columns</a></li>
-                        <li><a href="#">Four columns</a></li>
-                        <li><a href="#">Good Typography</a></li>
+
                       </ul>
                     </li>
                     <li class="col-md-3">
@@ -248,12 +244,12 @@
     </header>
     <!-- =====  HEADER END  ===== -->
     <!-- =====  BANNER STRAT  ===== -->
-    {{-- <div class="banner">
+    <div class="banner">
       <div class="main-banner owl-carousel">
         <div class="item"><a href="#"><img src={{asset("public/frontend/images/main_banner1.jpg")}} alt="Main Banner" class="img-responsive" /></a></div>
         <div class="item"><a href="#"><img src={{asset("public/frontend/images/main_banner2.jpg")}} alt="Main Banner" class="img-responsive" /></a></div>
       </div>
-    </div> --}}
+    </div>
     <!-- =====  BANNER END  ===== -->
     <!-- =====  CONTAINER START  ===== -->
     <div class="container">

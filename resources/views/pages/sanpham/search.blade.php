@@ -20,38 +20,28 @@
                 <div id="category-menu" class="navbar collapse in mb_40" aria-expanded="true" style="" role="button">
                     <div class="nav-responsive">
                     <div class="heading-part">
-                        <h2 class="main_title">Top category</h2>
+                        <h2 class="main_title">Danh mục</h2>
                     </div>
+                    @foreach($category as $key => $cate)
                     <ul class="nav  main-navigation collapse in">
-                        <li><a href="#">Appliances</a></li>
-                        <li><a href="#">Mobile Phones</a></li>
-                        <li><a href="#">Tablet PC &amp; Accessories</a></li>
-                        <li><a href="#">Consumer Electronics</a></li>
-                        <li><a href="#">Computers &amp; Networking</a></li>
-                        <li><a href="#">Electrical &amp; Tools</a></li>
-                        <li><a href="#">Apparel</a></li>
-                        <li><a href="#">Bags &amp; Shoes</a></li>
-                        <li><a href="#">Toys &amp; Hobbies</a></li>
-                        <li><a href="#">Watches &amp; Jewelry</a></li>
-                        <li><a href="#">Home &amp; Garden</a></li>
-                        <li><a href="#">Health &amp; Beauty</a></li>
-                        <li><a href="#">Outdoors &amp; Sports</a></li>
+                    <li><a href="{{URL::to('danh-muc-san-pham/'.$cate->category_id)}}">{{$cate->category_name}}</a></li>
                     </ul>
+                    @endforeach
                 </div>
             </div>
             <div class="filter left-sidebar-widget mb_50">
                 <div class="heading-part mtb_20 ">
-                <h2 class="main_title">Refinr Search</h2>
+                <h2 class="main_title">Tùy chọn tìm kiếm</h2>
                 </div>
                 <div class="filter-block">
                 <p>
-                    <label for="amount">Price range:</label>
+                    <label for="amount">Tầm giá:</label>
                     <input type="text" id="amount" readonly="">
                 </p>
                 <div id="slider-range" class="mtb_20"></div>
                 <div class="list-group">
                     <div class="list-group-item mb_10">
-                    <label>Color</label>
+                    <label>Theo màu:</label>
                     <div id="filter-group1">
                         <div class="checkbox">
                         <label>
@@ -94,19 +84,19 @@
             <div class="category-page-wrapper mb_30">
                 <div class="list-grid-wrapper pull-left">
                 <div class="btn-group btn-list-grid">
-                    <button type="button" id="grid-view" class="btn btn-default grid-view active"></button>
-                    <button type="button" id="list-view" class="btn btn-default list-view"></button>
+                    <button type="button" id="list-view" class="btn btn-default list-view active"></button>
+                    <button type="button" id="grid-view" class="btn btn-default grid-view "></button>
+
                 </div>
                 </div>
                 <div class="page-wrapper pull-right">
                 <label class="control-label" for="input-limit">Show :</label>
                 <div class="limit">
                     <select id="input-limit" class="form-control">
-                    <option value="8" selected="selected">08</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
+                    <option value="3" selected="selected">3</option>
+                    <option value="5">5</option>
+                    <option value="8">8</option>
+                    <option value="10">10</option>
                     </select>
                 </div>
                 <span><i class="fa fa-angle-down" aria-hidden="true"></i></span>
@@ -118,12 +108,6 @@
                     <option value="ASC" selected="selected">Default</option>
                     <option value="ASC">Name (A - Z)</option>
                     <option value="DESC">Name (Z - A)</option>
-                    <option value="ASC">Price (Low &gt; High)</option>
-                    <option value="DESC">Price (High &gt; Low)</option>
-                    <option value="DESC">Rating (Highest)</option>
-                    <option value="ASC">Rating (Lowest)</option>
-                    <option value="ASC">Model (A - Z)</option>
-                    <option value="DESC">Model (Z - A)</option>
                     </select>
                 </div>
                 <span><i class="fa fa-angle-down" aria-hidden="true"></i></span>
@@ -132,9 +116,9 @@
             <div class="row">
                 <div class="product-layout product-grid col-md-4 col-xs-6 ">
                     @foreach($search_product as $key => $product)
-                <div class="item">
+                <div class="item  col-xs-12 col-lg-12">
                     <div class="product-thumb clearfix mb_30">
-                    <div class="image product-imageblock"> <a href="product_detail_page.html"> <img data-name="product_image" src="{{URL::to("public/uploads/product/".$product->product_image)}}" alt="iPod Classic" title="" class="img-responsive"></a>
+                    <div class="image product-imageblock"> <a href="{{URL::to('/chi-tiet-san-pham',$product->product_id)}}"> <img data-name="product_image" src="{{URL::to("public/uploads/product/".$product->product_image)}}" alt="iPod Classic" title="" class="img-responsive"><img  src="{{URL::to("public/uploads/product/".$product->product_image)}}"></a>
                         <div class="button-group text-center">
                         <div class="wishlist"><a href="#"><span>wishlist</span></a></div>
                         <div class="quickview"><a href="#"><span>Quick View</span></a></div>
