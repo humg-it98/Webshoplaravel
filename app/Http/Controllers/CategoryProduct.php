@@ -39,7 +39,7 @@ class CategoryProduct extends Controller
             Session::put('message','Kich hoat danh muc thanh cong');
             return Redirect::to('all-category-product');
         }
- 
+
         public function edit_category_product($category_product_id){
             $edit_category_product = DB::table('tbl_category_product')->where('category_id',$category_product_id)->get();
             $manager_category_product = view('admin.edit_category_product')->with('edit_category_product',$edit_category_product);
@@ -59,5 +59,13 @@ class CategoryProduct extends Controller
             DB::table('tbl_category_product')->where('category_id',$category_product_id)->delete();
             Session::put('message','Đã xóa danh muc thanh cong');
             return Redirect::to('all-category-product');
+        }
+        //show sản phẩm thuộc danh mục trang home
+        public function show_category_home($category_id){
+            $cate_product = DB::table('tbl_category_product')->where('category_status','0')->orderby('category_id','desc')->get();
+            $brand_product = DB::table('tbl_brand_product')->where('brand_status','0')->orderby('brand_id','desc')->get();
+            $category_by_id = DB::table('tbl_product')->join('tbl_category_product','tbl_product.category_id','=','tbl_category_product.category_id')->where('tbl_product.category_id',$category_id)->get();
+            $category_name = DB::table('tbl_category_product')->where('tbl_category_product.category_id',$category_id)->limit(1)->get();
+            return view('pages.category.show_category')->with('category',$cate_product)->with('brand',$brand_product)->with('category_by_id',$category_by_id)->with('category_name',$category_name);
         }
 }
