@@ -8,9 +8,9 @@
             <div class="breadcrumb ptb_20">
             <h1>Chi tiết sản phẩm...</h1>
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="category_page.html">Products</a></li>
-                <li class="active">New LCDS...</li>
+                <li><a href="{{URL::to('/')}}">Trang chủ</a></li>
+                <li><a href="category_page.html">Sản phẩm</a></li>
+                <li class="active">...</li>
             </ul>
             </div>
         </div>
@@ -99,12 +99,12 @@
                                     </div>
                                 </div>
                                 <div class="qty mt_30 form-group2">
-                                    <label>Qty</label>
-                                    <input name="product_quantity" min="1" value="1" type="number">
+                                    <label>Số lượng:</label>
+                                    <input name="qty" min="1" value="1" type="number">
                                     <input name="productid_hidden" type="hidden" value="{{$value->product_id}}">
                                 </div>
                                 <div class="button-group mt_30">
-                                    <button style="submit" class="add-to-cart"><span>Thêm giỏ hàng</span></button>
+                                    <button tyle="submit" class="add-to-cart"><span>Thêm giỏ hàng</span></button>
                                     <div class="wishlist"><a href="#"><span>wishlist</span></a></div>
                                     <div class="compare"><a href="#"><span>Compare</span></a></div>
                                 </div>
@@ -177,7 +177,7 @@
                 <div class="product-layout  product-grid related-pro  owl-carousel mb_50 ">
                     <div class="item">
                     <div class="product-thumb">
-                        <div class="image product-imageblock"> <a href="#"> <img data-name="product_image" src="{{URL::to('public/uploads/product/'.$lienquan->product_image)}}" class="img-responsive"><img src="{{URL::to('public/uploads/product/'.$lienquan->product_image)}}"> </a>
+                        <div class="image product-imageblock"> <a href="{{URL::to('/chi-tiet-san-pham',$lienquan->product_id)}}"> <img data-name="product_image" src="{{URL::to('public/uploads/product/'.$lienquan->product_image)}}" class="img-responsive"><img src="{{URL::to('public/uploads/product/'.$lienquan->product_image)}}"> </a>
                         <div class="button-group text-center">
                             <div class="wishlist"><a href="#"><span>wishlist</span></a></div>
                             <div class="quickview"><a href="#"><span>Quick View</span></a></div>
