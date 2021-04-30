@@ -13,7 +13,7 @@ class AdminController extends Controller
 {
     public function AuthLogin(){
         $admin_id = Session::get('admin_id');
-        if('admin_id'){
+        if($admin_id){
             return Redirect::to('dashboard');
         }else{
             return Redirect::to('admin')->send();
@@ -24,6 +24,7 @@ class AdminController extends Controller
         return view('admin_login');
     }
     public function show_dashboard(){
+        $this->AuthLogin();
         return view('admin_layout');
     }
     public function dashboard(Request $request){
