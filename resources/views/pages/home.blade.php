@@ -1,4 +1,5 @@
 @extends('layout')
+@extends('banner')
 @section('content')
 
 <div class="col-sm-12 mt_30">
@@ -127,8 +128,8 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
+        </div>
+        </div>
     <div class="col-sm-12 mtb_10">
       <!-- =====  Blog ===== -->
       <div id="Blog" class="mt_50">

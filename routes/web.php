@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 /*Front-end*/
 Route::get('/','HomeController@index');
 Route::get('/trang-chu','HomeController@index');
+Route::post('/tim-kiem','HomeController@search');
 
 /*Back-end*/
 Route::get('/admin','AdminController@index');
@@ -54,5 +55,25 @@ Route::post('/update-product/{product_id}','ProductController@update_product');
 Route::get('/delete-product/{product_id}','ProductController@delete_product');
 Route::post('/save-product','ProductController@save_product');
 
+//Danh mục sp
+Route::get('/danh-muc-san-pham/{category_id}','CategoryProduct@show_category_home');
+Route::get('/thuong-hieu-san-pham/{brand_id}','BrandProduct@show_brand_home');
+Route::get('/chi-tiet-san-pham/{product_id}','ProductController@details_product');
+
+//Cart
+Route::post('/save-cart','CartController@save_cart');
+Route::get('/show-cart','CartController@show_cart');
+Route::get('/delete-to-cart/{rowId}','CartController@delete_to_cart');
+Route::get('/update-cart-quantity','CartController@update_cart');
+
+//Check-out
+Route::get('/login-checkout','CheckoutController@login_checkout');
+Route::post('/logout-checkout','CheckoutController@logout_checkout');
+Route::post('/add-customer','CheckoutController@add_customer');
+Route::get('/checkout','CheckoutController@checkout');
+Route::post('/save-checkout-customer','CheckoutController@save_checkout_customer');
+Route::get('/payment','CheckoutController@payment');
+Route::post('/login-customer','CheckoutController@login_customer');
+Route::post('/order-place','CheckoutController@order_place');
 
 

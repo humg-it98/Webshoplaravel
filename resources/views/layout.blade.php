@@ -71,7 +71,7 @@
             </div>
             <div class="col-xs-12 col-sm-8">
               <ul class="header-top-right text-right">
-                <li class="account"><a href="login.html">My Account</a></li>
+                <li class="account"><a href="{{URL::to('/login-checkout')}}">Tài khoản của tôi</a></li>
                 <li class="language dropdown"> <span class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">Language <span class="caret"></span> </span>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                     <li><a href="#">English</a></li>
@@ -114,20 +114,15 @@
                   <li>
                     <table class="table table-striped">
                       <tbody>
-                        <tr>
-                          <td class="text-center"><a href="#"><img src={{asset("public/frontend/images/product/70x84.jpg")}} alt="iPod Classic" title="iPod Classic"></a></td>
-                          <td class="text-left product-name"><a href="#">MacBook Pro</a> <span class="text-left price">$20.00</span>
-                            <input class="cart-qty" name="product_quantity" min="1" value="1" type="number">
-                          </td>
-                          <td class="text-center"><a class="close-cart"><i class="fa fa-times-circle"></i></a></td>
-                        </tr>
-                        <tr>
-                          <td class="text-center"><a href="#"><img src={{asset("public/frontend/images/product/70x84.jpg")}} alt="iPod Classic" title="iPod Classic"></a></td>
-                          <td class="text-left product-name"><a href="#">MacBook Pro</a> <span class="text-left price">$20.00</span>
-                            <input class="cart-qty" name="product_quantity" min="1" value="1" type="number">
-                          </td>
-                          <td class="text-center"><a class="close-cart"><i class="fa fa-times-circle"></i></a></td>
-                        </tr>
+
+                            <tr>
+                            <td class="text-center"><a href="#"><img src={{asset("public/frontend/images/product/70x84.jpg")}} alt="iPod Classic" title="iPod Classic"></a></td>
+                            <td class="text-left product-name"><a href="#">MacBook Pro</a> <span class="text-left price">$20.00</span>
+                                <input class="cart-qty" name="product_quantity" min="1" value="1" type="number">
+                            </td>
+                            <td class="text-center"><a class="close-cart"><i class="fa fa-times-circle"></i></a></td>
+                            </tr>
+
                       </tbody>
                     </table>
                   </li>
@@ -170,7 +165,7 @@
             <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".js-navbar-collapse"> <span class="i-bar"><i class="fa fa-bars"></i></span></button>
             <div class="collapse navbar-collapse js-navbar-collapse">
               <ul id="menu" class="nav navbar-nav">
-                <li> <a href="{{URL::to('/')}}">Home</a></li>
+                <li> <a href="{{URL::to('/')}}">Trang chủ</a></li>
                 <li class="dropdown mega-dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">Collection </a>
                   <ul class="dropdown-menu mega-dropdown-menu row">
                     <li class="col-md-3">
@@ -245,10 +240,7 @@
     <!-- =====  HEADER END  ===== -->
     <!-- =====  BANNER STRAT  ===== -->
     <div class="banner">
-      <div class="main-banner owl-carousel">
-        <div class="item"><a href="#"><img src={{asset("public/frontend/images/main_banner1.jpg")}} alt="Main Banner" class="img-responsive" /></a></div>
-        <div class="item"><a href="#"><img src={{asset("public/frontend/images/main_banner2.jpg")}} alt="Main Banner" class="img-responsive" /></a></div>
-      </div>
+      @yield('banner')
     </div>
     <!-- =====  BANNER END  ===== -->
     <!-- =====  CONTAINER START  ===== -->
@@ -333,7 +325,7 @@
               <li><a href="#">Returns</a></li>
               <li><a href="#">Site Map</a></li>
               <li><a href="#">Wish List</a></li>
-              <li><a href="#">My Account</a></li>
+              <li><a href="">My Account</a></li>
               <li><a href="#">Order History</a></li>
             </ul>
           </div>
