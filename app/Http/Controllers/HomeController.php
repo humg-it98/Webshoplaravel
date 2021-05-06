@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use Mail;
 use Session;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
@@ -34,4 +35,23 @@ class HomeController extends Controller
 
         return view('pages.sanpham.search')->with('category',$cate_product)->with('brand',$brand_product)->with('search_product',$search_product);
     }
+
+
+    public function send_mail(){
+        //send mail
+               $to_name = "Cửa hàng NTN xin chào ";
+               $to_email = "thoigian5792@gmail.com";//send to this email
+
+               $data = array("name"=>"Mail từ tài khoản Khách hàng","body"=>'Mail gửi về vấn về hàng hóa'); //body of mail.blade.php
+
+               Mail::send('pages.send_mail',$data,function($message) use ($to_name,$to_email){
+
+                   $message->to($to_email)->subject('Test thử gửi mail google');//send this mail with subject
+                   $message->from($to_email,$to_name);//send from this mail
+
+               });
+               return redirect('/')->with('message','');
+               //--send mail
+   }
+
 }
