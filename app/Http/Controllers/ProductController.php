@@ -24,7 +24,7 @@ class ProductController extends Controller
             $this->AuthLogin();
             $cate_product = DB::table('tbl_category_product')->orderby('category_id','desc')->get();
             $brand_product = DB::table('tbl_brand_product')->orderby('brand_id','desc')->get();
-            return view('admin.add_product')->with('cate_product', $cate_product)->with('brand_product',$brand_product);
+            return view('admin.product.add_product')->with('cate_product', $cate_product)->with('brand_product',$brand_product);
         }
         public function all_product(){
             $this->AuthLogin();
@@ -32,8 +32,8 @@ class ProductController extends Controller
             ->join('tbl_category_product','tbl_category_product.category_id','=','tbl_product.category_id')
             ->join('tbl_brand_product','tbl_brand_product.brand_id','=','tbl_product.brand_id')
             ->orderby('tbl_product.product_id','desc')->get();
-            $manager_product  = view('admin.all_product')->with('all_product',$all_product);
-            return view('admin_layout')->with('admin.all_product', $manager_product);
+            $manager_product  = view('admin.product.all_product')->with('all_product',$all_product);
+            return view('admin_layout')->with('admin.product.all_product', $manager_product);
 
         }
         public function save_product(Request $request){
@@ -43,6 +43,7 @@ class ProductController extends Controller
             $data['product_name'] = $request->product_name;
             $data['product_price'] = $request->product_price;
             $data['product_desc'] = $request->product_desc;
+            $data['product_slug'] = $request->product_slug;
             $data['product_content'] = $request->product_content;
             $data['category_id'] = $request->product_cate;
             $data['brand_id'] = $request->product_brand;
@@ -94,8 +95,8 @@ class ProductController extends Controller
             $cate_product = DB::table('tbl_category_product')->orderby('category_id','desc')->get();
             $brand_product = DB::table('tbl_brand_product')->orderby('brand_id','desc')->get();
             $edit_product = DB::table('tbl_product')->where('product_id',$product_id)->get();
-            $manager_product = view('admin.edit_product')->with('edit_product',$edit_product)->with('cate_product',$cate_product)->with('brand_product',$brand_product);
-            return view('admin_layout')->with('admin.edit_product', $manager_product);
+            $manager_product = view('admin.product.edit_product')->with('edit_product',$edit_product)->with('cate_product',$cate_product)->with('brand_product',$brand_product);
+            return view('admin_layout')->with('admin.product.edit_product', $manager_product);
         }
 
 
@@ -141,6 +142,12 @@ class ProductController extends Controller
             ->join('tbl_brand_product','tbl_brand_product.brand_id','=','tbl_product.brand_id')
             ->where('tbl_product.product_id',$product_id)->get();
 
+            $product_images = DB::table('tbl_product')
+            ->join('tbl_images_product','tbl_images_product.product_id','=','tbl_product.product_id')
+            ->where('tbl_images_product.product_id',$product_id)
+            ->get();
+            // dd($product_images);
+
             //seo
             $meta_desc = "Shop Đồng Hồ⌚️ Nam Nữ Hơn 15 Cửa Hàng & 15 Năm Bán Đồng Hồ ️ Casio, Orient, Citizen, DW, Tissot Chính Hãng Bảo Hành 5 Năm⚡ Khuyến Mãi 20%-50 ";
             $meta_keywords = "Đồng Hồ ️ Casio, Orient, Citizen, DW, Tissot Chính Hãng";
@@ -158,7 +165,85 @@ class ProductController extends Controller
             ->where('tbl_category_product.category_id',$category_id)->whereNotIn('tbl_product.product_id',[$product_id])->get();
 
 
-            return view('pages.sanpham.show_details')->with('category',$cate_product)->with('brand',$brand_product)->with('product_details',$details_product)->with('relate',$related_product)->with('meta_desc',$meta_desc)->with('meta_keywords',$meta_keywords)->with('meta_title',$meta_title)->with('url_canonical',$url_canonical);
+            return view('pages.sanpham.show_details')->with('category',$cate_product)->with('brand',$brand_product)->with('product_images',$product_images)->with('product_details',$details_product)->with('relate',$related_product)->with('meta_desc',$meta_desc)->with('meta_keywords',$meta_keywords)->with('meta_title',$meta_title)->with('url_canonical',$url_canonical);
+        }
+
+        public function add_images_product (){
+            $this->AuthLogin();
+            $brand_product = DB::table('tbl_brand_product')->orderby('brand_id','desc')->get();
+            $product = DB::table('tbl_product')->orderby('product_id','desc')->get();
+            return view('admin.add_images_product')->with('product', $product)->with('brand_product',$brand_product);
+        }
+
+        public function save_images_product(Request $request){
+            $this->AuthLogin();
+            $data = array();
+            $product = DB::table('tbl_product')->orderby('product_id','desc')->get();
+
+            $get_image_1 = $request->file('product_image_1');
+            $get_image_2 = $request->file('product_image_2');
+            $get_image_3 = $request->file('product_image_3');
+            $get_image_4 = $request->file('product_image_4');
+            $path = 'public/uploads/product_img/';
+
+            if($get_image_1||$get_image_2||$get_image_3||$get_image_4){
+                $this->validate($request,
+                [
+                    //Kiểm tra đúng file đuôi .jpg,.jpeg,.png.gif và dung lượng không quá 2M
+                    'product_image_1' => 'mimes:jpg,jpeg,png,gif|max:2048',
+                    'product_image_2' => 'mimes:jpg,jpeg,png,gif|max:2048',
+                    'product_image_3' => 'mimes:jpg,jpeg,png,gif|max:2048',
+                    'product_image_4' => 'mimes:jpg,jpeg,png,gif|max:2048',
+                ],
+                [
+                    //Tùy chỉnh hiển thị thông báo không thõa điều kiện
+                    'product_image_1.mimes' => 'Chỉ chấp nhận hình thẻ với đuôi .jpg .jpeg .png .gif',
+                    'product_image_1.max' => 'Hình thẻ giới hạn dung lượng không quá 2M',
+                    'product_image_2.mimes' => 'Chỉ chấp nhận hình thẻ với đuôi .jpg .jpeg .png .gif',
+                    'product_image_2.max' => 'Hình thẻ giới hạn dung lượng không quá 2M',
+                    'product_image_3.mimes' => 'Chỉ chấp nhận hình thẻ với đuôi .jpg .jpeg .png .gif',
+                    'product_image_3.max' => 'Hình thẻ giới hạn dung lượng không quá 2M',
+                    'product_image_4.mimes' => 'Chỉ chấp nhận hình thẻ với đuôi .jpg .jpeg .png .gif',
+                    'product_image_4.max' => 'Hình thẻ giới hạn dung lượng không quá 2M',
+
+                ]);
+                $get_name_image_1 = $get_image_1->getClientOriginalName();
+                $name_image_1 = current(explode('.',$get_name_image_1));
+                $new_image_1 =  $name_image_1.rand(0,99999).'.'.$get_image_1->getClientOriginalExtension();
+                $get_image_1->move($path,$new_image_1);
+                $data['product_image_1'] = $new_image_1;
+
+                $get_name_image_2 = $get_image_2->getClientOriginalName();
+                $name_image_2 = current(explode('.',$get_name_image_2));
+                $new_image_2 =  $name_image_2.rand(0,99999).'.'.$get_image_2->getClientOriginalExtension();
+                $get_image_2->move($path,$new_image_2);
+                $data['product_image_2'] = $new_image_2;
+
+                $get_name_image_3 = $get_image_3->getClientOriginalName();
+                $name_image_3 = current(explode('.',$get_name_image_3));
+                $new_image_3 =  $name_image_3.rand(0,99999).'.'.$get_image_3->getClientOriginalExtension();
+                $get_image_3->move($path,$new_image_3);
+                $data['product_image_3'] = $new_image_3;
+
+                $get_name_image_4 = $get_image_4->getClientOriginalName();
+                $name_image_4 = current(explode('.',$get_name_image_4));
+                $new_image_4 =  $name_image_4.rand(0,99999).'.'.$get_image_4->getClientOriginalExtension();
+                $get_image_4->move($path,$new_image_4);
+                $data['product_image_4'] = $new_image_4;
+
+
+                DB::table('tbl_images_product')->insert($data);
+                Session::put('message','Thêm hình ảnh sản phẩm thành công');
+                return Redirect::to('add-product');
+            }
+            $data['product_id'] = $request->product_cate;
+            $data['product_image_1'] = '';
+            $data['product_image_2'] = '';
+            $data['product_image_3'] = '';
+            $data['product_image_4'] = '';
+            DB::table('tbl_product')->insert($data);
+            Session::put('message','Thêm hình ảnh sản phẩm thành công');
+            return Redirect::to('all-product');
         }
 
 }
