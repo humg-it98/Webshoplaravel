@@ -10,7 +10,7 @@
                 @foreach($category_name as $key => $name)
                 <h1>{{$name->category_name}}</h1>
                 <ul>
-                <li><a href="{{URL::to('/trang-chu')}}">Home</a></li>
+                <li><a href="{{URL::to('/   ')}}">Home</a></li>
                 <li class="active">{{$name->category_name}}</li>
                 <li class="active">Search</li>
                 </ul>
@@ -116,7 +116,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="product-layout product-grid col-md-4 col-xs-12 ">
+                <div class="product-layout  product-grid related-pro  owl-carousel mb_30 ">
                     @foreach($category_by_id as $key => $product)
                 <div class="item  col-xs-12 col-lg-12">
                     <div class="product-thumb clearfix mb_30">
