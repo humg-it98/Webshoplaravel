@@ -54,6 +54,8 @@ Route::get('/edit-product/{product_id}','ProductController@edit_product');
 Route::post('/update-product/{product_id}','ProductController@update_product');
 Route::get('/delete-product/{product_id}','ProductController@delete_product');
 Route::post('/save-product','ProductController@save_product');
+Route::get('/add-images-product','ProductController@add_images_product');
+Route::post('/save-images-product','ProductController@save_images_product');
 
 //Danh mục sp
 Route::get('/danh-muc-san-pham/{category_id}','CategoryProduct@show_category_home');
@@ -65,6 +67,28 @@ Route::post('/save-cart','CartController@save_cart');
 Route::get('/show-cart','CartController@show_cart');
 Route::get('/delete-to-cart/{rowId}','CartController@delete_to_cart');
 Route::get('/update-cart-quantity','CartController@update_cart');
+//Cart dùng Ajax
+Route::post('/add-cart-ajax','CartController@add_cart_ajax');
+Route::get('/gio-hang','CartController@gio_hang');
+
+//Coupon
+Route::post('/check-coupon','CouponController@check_coupon');
+Route::get('/insert-coupon','CouponController@insert_coupon');
+Route::post('/insert-coupon-code','CouponController@insert_coupon_code');
+Route::get('/list-coupon','CouponController@list_coupon');
+Route::get('/delete-coupon/{coupon_id}','CouponController@delete_coupon');
+Route::get('/unset-coupon','CouponController@unset_coupon');
+
+//Banner
+Route::get('/manage-slider','SliderController@manage_slider');
+Route::get('/add-slider','SliderController@add_slider');
+Route::get('/delete-slide/{slide_id}','SliderController@delete_slide');
+Route::post('/insert-slider','SliderController@insert_slider');
+Route::get('/unactive-slide/{slide_id}','SliderController@unactive_slide');
+Route::get('/active-slide/{slide_id}','SliderController@active_slide');
+
+//Delivery
+Route::get('/delivery','DeliveryController@delivery');
 
 //Check-out
 Route::get('/login-checkout','CheckoutController@login_checkout');
@@ -75,5 +99,18 @@ Route::post('/save-checkout-customer','CheckoutController@save_checkout_customer
 Route::get('/payment','CheckoutController@payment');
 Route::post('/login-customer','CheckoutController@login_customer');
 Route::post('/order-place','CheckoutController@order_place');
+
+// Order (Đơn hàng trang Admin)
+Route::get('/manage-order','CheckoutController@manage_order');
+Route::get('/view-order/{order_id}','CheckoutController@view_order');
+
+
+//sent-mail
+Route::get('/send-mail','HomeController@send_mail');
+
+//Login facebook
+Route::get('/login-facebook','AdminController@login_facebook');
+Route::get('/admin/callback','AdminController@callback_facebook');
+
 
 

@@ -12,10 +12,18 @@
                 <li><a href="{{URL::to('/show-cart')}}">Giỏ hàng</a></li>
             </ul>
             </div>
+            @if(session()->has('message'))
+            <div class="alert alert-success">
+                {!! session()->get('message') !!}
+            </div>
+            @elseif(session()->has('error'))
+             <div class="alert alert-danger">
+                {!! session()->get('error') !!}
+            </div>
+        @endif
         </div>
         <!-- =====  BREADCRUMB END===== -->
         <div id="column-left" class="col-sm-4 col-lg-3 hidden-xs">
-
             <div id="category-menu" class="navbar collapse in mb_40" aria-expanded="true" style="" role="button">
             <div class="nav-responsive">
                 <div class="heading-part">
@@ -54,8 +62,10 @@
                     </tr>
                   </thead>
                   <tbody>
+                    {{-- @if(Cart::content()==true) --}}
                     <?php
                     $content = Cart::content();
+                    $total=0;
                     ?>
                     @foreach($content as $item)
                     <tr>
@@ -65,13 +75,13 @@
                       <td class="text-left">
                         <form action="{{URL::to('/update-cart-quantity')}}" method="get">
                             {{ csrf_field() }}
-                            <div style="max-width: 150px;" class="input-group btn-block">
+                            <div style="max-width: 300px;" class="input-group btn-block">
                             <input type="text" class="form-control quantity" size="1" value={{$item->qty}} name="qty">
                             <input type="hidden" value="{{$item->rowId}}" name="rowId_cart" class="form-control">
                             <span class="input-group-btn">
-                            <button class="btn" title="" data-toggle="tooltip" type="submit" data-original-title="Update" ><i class="fa fa-refresh"></i></a></button>
+                            <button class="btn  btn-sm" title="" data-toggle="tooltip" type="submit" data-original-title="Update" ><i class="fa fa-refresh"></i></a></button>
                             {{-- <a  href="{{URL::to('/update-cart-quantity/'. $item->rowId)}}"> --}}
-                            <button class="btn btn-danger" title="" data-toggle="tooltip" type="button" data-original-title="Remove"><a  href="{{URL::to('/delete-to-cart/'. $item->rowId)}}"><i class="fa fa-times-circle"></i></a></button>
+                            <button class="btn btn-primary btn-sm" title="" data-toggle="tooltip" type="button" data-original-title="Remove"><a  href="{{URL::to('/delete-to-cart/'. $item->rowId)}}"><i class="fa fa-times-circle"></i></a></button>
                             </span></div>
                         </form>
                       </td>
@@ -79,6 +89,7 @@
                       <td class="text-right">
                         <?php
                         $subtotal= $item->price * $item->qty;
+                        $total+=$subtotal;
                         echo number_format($subtotal).' VNĐ';
                         ?>
                       </td>
@@ -90,80 +101,74 @@
             </form>
             <h3 class="mtb_10">Bạn muốn làm gì tiếp theo?</h3>
             <p>Chọn xem bạn có mã giảm giá hoặc điểm thưởng muốn sử dụng hay xem ước tính chi phí giao hàng.</p>
-            <div class="panel-group mt_20" id="accordion">
-              <div class="panel panel-default pull-left">
-                <div class="panel-heading">
-                  <h4 class="panel-title"> <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Sử dụng phiếu giảm giá <i class="fa fa-caret-down"></i></a></h4>
-                </div>
-                <div id="collapseOne" class="panel-collapse collapse in">
-                  <div class="panel-body">
-                    <label for="input-coupon" class="col-sm-4 control-label">Nhập mã giảm giá tại đây</label>
-                    <div class="input-group">
-                      <input type="text" class="form-control" id="input-coupon" placeholder="Nhập mã giảm giá" value="" name="coupon">
-                      <span class="input-group-btn">
-                    <input type="button" class="btn" data-loading-text="Loading..." id="button-coupon" value="Apply Coupon">
-                    </span> </div>
-                  </div>
-                </div>
-              </div>
-              <div class="panel panel-default pull-left">
-                <div class="panel-heading">
-                  <h4 class="panel-title"> <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Sử dụng phiếu quà tặng <i class="fa fa-caret-down"></i></a> </h4>
-                </div>
-                <div id="collapseTwo" class="panel-collapse collapse">
-                  <div class="panel-body">
-                    <label for="input-voucher" class="col-sm-4 control-label">Nhập mã quà tặng tại đây</label>
-                    <div class="input-group">
-                      <input type="text" class="form-control" id="input-voucher" placeholder="Nhập mã quà tặng" value="" name="voucher">
-                      <span class="input-group-btn">
-                    <input type="button" class="btn" data-loading-text="Loading..." id="button-voucher" value="Apply Voucher">
-                    </span> </div>
-                  </div>
-                </div>
-              </div>
-              <div class="panel panel-default pull-left">
-                <div class="panel-heading">
-                  <h4 class="panel-title"> <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">Phí vận chuyển và &amp; Thuế <i class="fa fa-caret-down"></i></a> </h4>
-                </div>
-                <div id="collapseThree" class="panel-collapse collapse">
-                  <div class="panel-body">
-                    <p>Vui lòng điền thông tin người nhận hàng.</p>
-                    <form class="form-horizontal">
-                      <div class="form-group required">
-                        <label for="input-country" class="col-sm-2 control-label">Thành phố</label>
-                        <div class="col-sm-10">
-                          <select class="form-control" id="input-country" name="country_id">
-                            <option value=""> - Chọn - </option>
-                            <option value="244">Hà Nội</option>
-                            <option value="1">Tp Hồ Chí Minh</option>
-                            <option value="2">Đà Nẵng</option>
-                            <option value="3">Thái Bình</option>
-
-                          </select>
+                <div class="panel-group mt_20" id="accordion">
+                    @if(Session::get('cart'))
+                    <div class="panel panel-default pull-left">
+                        <div class="panel-heading">
+                        <h4 class="panel-title"> <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Sử dụng phiếu giảm giá <i class="fa fa-caret-down"></i></a></h4>
                         </div>
-                      </div>
-                      <div class="form-group required">
-                        <label for="input-zone" class="col-sm-2 control-label">Quận/Huyện</label>
-                        <div class="col-sm-10">
-                          <select class="form-control" id="input-zone" name="zone_id">
-                            <option value=""> --- Chọn --- </option>
-                            <option value="3513">Hai Bà Trưng</option>
-                            <option value="3514">Hoàn Kiếm</option>
-                          </select>
+                        <div id="collapseOne" class="panel-collapse collapse in">
+                            <form action="{{URL::to('/check-coupon')}}" method="POST">
+                                {{ csrf_field() }}
+                                <div class="panel-body">
+                                    <label for="input-coupon" class="col-sm-4 control-label">Nhập mã giảm giá tại đây</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="input-coupon" placeholder="Nhập mã giảm giá" value="" name="coupon">
+                                        <span class="input-group-btn">
+                                         <input type="submit" class="btn btn-success"style="border-radius:20px " data-loading-text="Loading..." id="button-coupon" value="Apply Coupon">
+                                         <input type="submit" class="btn btn-danger" style="border-radius:20px " data-loading-text="Loading..." id="button-coupon" value="Delete Coupon">
+                                        </span>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                      </div>
-                      <div class="form-group required">
-                        <label for="input-postcode" class="col-sm-2 control-label">Mã bưu chính:</label>
-                        <div class="col-sm-10">
-                          <input type="text" class="form-control" id="input-postcode" placeholder="Nhập mã bưu chính" value="" name="postcode">
+                    </div>
+                    @endif
+                    <div class="panel panel-default pull-left">
+                        <div class="panel-heading">
+                        <h4 class="panel-title"> <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">Phí vận chuyển và &amp; Thuế <i class="fa fa-caret-down"></i></a> </h4>
                         </div>
-                      </div>
-                      <input type="button" class="btn pull-right" data-loading-text="Loading..." id="button-quote" value="Tính ">
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
+                        <div id="collapseThree" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <p>Vui lòng điền thông tin người nhận hàng.</p>
+                            <form class="form-horizontal">
+                            <div class="form-group required">
+                                <label for="input-country" class="col-sm-2 control-label">Thành phố</label>
+                                <div class="col-sm-10">
+                                <select class="form-control" id="input-country" name="country_id">
+                                    <option value="">--Chọn tỉnh thành phố--</option>
+                                    @foreach($city as $key => $ci)
+                                        <option value="{{$ci->matp}}">{{$ci->name_city}}</option>
+                                    @endforeach
+                                </select>
+                                </div>
+                            </div>
+                            <div class="form-group required">
+                                <label for="input-zone" class="col-sm-2 control-label">Quận/Huyện</label>
+                                <div class="col-sm-10">
+                                <select class="form-control" id="input-zone" name="zone_id">
+                                    <option value=""> --- Chọn quận huyện--- </option>
+                                    <option value="3513">Hai Bà Trưng</option>
+                                    <option value="3514">Hoàn Kiếm</option>
+                                </select>
+                                </div>
+                            </div>
+                            <div class="form-group required">
+                                <label for="input-zone" class="col-sm-2 control-label">Quận/Huyện</label>
+                                <div class="col-sm-10">
+                                <select class="form-control" id="input-zone" name="zone_id">
+                                    <option value=""> --- Chọn xã phường--- </option>
+                                    <option value="3513">Hai Bà Trưng</option>
+                                    <option value="3514">Hoàn Kiếm</option>
+                                </select>
+                                </div>
+                            </div>
+                            <input type="button" class="btn pull-right" data-loading-text="Loading..." id="button-quote" value="Tính ">
+                            </form>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
             <div class="row">
               <div class="col-sm-4 col-sm-offset-8">
                 <table class="table table-bordered">
@@ -172,17 +177,44 @@
                       <td class="text-right"><strong>Tạm tính:</strong></td>
                       <td class="text-right">{{Cart::subtotal().' '.'vnđ'}}</td>
                     </tr>
+
+
                     <tr>
-                      <td class="text-right"><strong>Thuế (VAT):</strong></td>
-                      <td class="text-right">0</td>
-                    </tr>
+                        @if(Session::get('coupon'))
+                            @foreach(Session::get('coupon') as $key => $cou)
+                                @if($cou['coupon_condition']==1)
+                                    <td class="text-right"><strong>Mã giảm:</strong></td>
+                                    <td class="text-right">{{$cou['coupon_number']}} % </td>
+                                        @php
+                                        $total_coupon = ($total*$cou['coupon_number'])/100;
+                                        $total_after_coupon = $total-$total_coupon;
+                                        @endphp
+                                @elseif($cou['coupon_condition']==2)
+                                        <td class="text-right"><strong>Mã giảm:</strong></td>
+                                        <td class="text-right">{{number_format($cou['coupon_number'],0,',','.')}} VNĐ </td>
+                                        @php
+                                        $total_coupon = $total - $cou['coupon_number'];
+                                        $total_after_coupon = $total_coupon;
+                                        @endphp
+                                @else
+                                        <td class="text-right"><strong>Mã giảm:</strong></td>
+                                        <td class="text-right">0 </td>
+                                        @php
+                                        $total_coupon = $total;
+                                        $total_after_coupon = $total_coupon;
+                                        @endphp
+                                @endif
+                            @endforeach
+						    @endif
+                     </tr>
+
                     <tr>
                       <td class="text-right"><strong>Tiền ship:</strong></td>
                       <td class="text-right">0</td>
                     </tr>
                     <tr>
-                      <td class="text-right"><strong>Total:</strong></td>
-                      <td class="text-right">{{Cart::subtotal().' '.'vnđ'}}</td>
+                      <td class="text-right"><strong>Tổng tiền:</strong></td>
+                      {{-- <td class="text-right">{{number_format($total_after_coupon,0,',','.').'VNĐ'}}</td> --}}
                     </tr>
                   </tbody>
                 </table>

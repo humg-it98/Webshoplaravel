@@ -20,6 +20,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <link rel="stylesheet" href={{asset("public/backend/css/morris.css")}} type="text/css"/>
 <!-- calendar -->
 <link rel="stylesheet" href={{asset("public/backend/css/monthly.css")}}>
+<link href="{{asset('public/backend/css/sweetalert.css')}}" rel="stylesheet">
 <!-- //calendar -->
 <!-- //font-awesome icons -->
 <script src={{asset("public/backend/js/jquery2.0.3.min.js")}}></script>
@@ -117,8 +118,19 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <ul class="sub">
 						<li><a href="{{URL::to('/add-product')}}">Thêm sản phẩm</a></li>
 						<li><a href="{{URL::to('/all-product')}}">Liệt kê sản phẩm</a></li>
+                        <li><a href="{{URL::to('/add-images-product')}}">Thêm hình ảnh sản phẩm</a></li>
                     </ul>
                 </li>
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-book"></i>
+                        <span>Slider</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="{{URL::to('/manage-slider')}}">Liệt kê slider</a></li>
+                        <li><a href="{{URL::to('/add-slider')}}">Thêm slider</a></li>
+                    </ul>
+                </li>   
                 <li class="sub-menu">
                     <a href="javascript:;">
                         <i class="fa fa-book"></i>
@@ -129,7 +141,27 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<li><a href="{{URL::to('/all-category-product')}}">Liệt kê đơn hàng</a></li>
                     </ul>
                 </li>
-            </ul>
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-book"></i>
+                        <span>Quản lý mã giảm giá</span>
+                    </a>
+                    <ul class="sub">
+						<li><a href="{{URL::to('/insert-coupon')}}">Thêm mã giảm giá đơn hàng</a></li>
+						<li><a href="{{URL::to('/list-coupon')}}">Liệt kê mã giảm giá đơn hàng</a></li>
+                    </ul>
+                </li>
+            </li>
+            <li class="sub-menu">
+               <a href="javascript:;">
+                   <i class="fa fa-book"></i>
+                   <span>Vận chuyển</span>
+               </a>
+               <ul class="sub">
+                   <li><a href="{{URL::to('/delivery')}}">Quản lý vận chuyển</a></li>
+               </ul>
+           </li>
+        </ul>
         <!-- sidebar menu end-->
     </div>
 </aside>
@@ -155,12 +187,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src={{asset("public/backend/js/jquery.slimscroll.js")}}></script>
 <script src={{asset("public/backend/js/jquery.nicescroll.js")}}></script>
 <script src={{asset("public/backend/ckeditor/ckeditor.js")}}></script>
+{{-- <script src={{asset("public/backend/js/sweetalert.min.js")}}></script> --}}
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src={{asset("public/backend/js/jquery.form-validator.min.js")}}></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous">
+</script>
 
 <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
 <script src={{asset("public/backend/js/jquery.scrollTo.js")}}></script>
 <script >
     CKEDITOR.replace('ckeditor');
     CKEDITOR.replace('ckeditor_1');
+    CKEDITOR.replace('ckeditor_2');
+    CKEDITOR.replace('ckeditor_3');
 </script>
 <!-- morris JavaScript -->
 <script>
@@ -217,7 +257,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 
 	});
-	</script>
+</script>
+<script type="text/javascript">
+    $(document).ready(function)(){
+        $('.add_delivery').click(function(){
+            alert('ok');
+        })
+    })
+</script>
+
+
 
 </body>
 </html>

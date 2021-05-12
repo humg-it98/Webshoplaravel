@@ -10,7 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
     integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-
 </head>
 
 <body>
@@ -54,9 +53,23 @@
                     <div class="input-form">
                         <input type="submit" value="Đăng nhập" name="Đăng nhập">
                     </div>
+                    <div>
+                        <div class="g-recaptcha" data-sitekey="{{env('6Le_zMsaAAAAABRNTq18eyvhv9NanYlQkwg4uOVA"')}}"></div>
+                            <br/>
+                            @if($errors->has('g-recaptcha-response'))
+                            <span class="invalid-feedback" style="display:block">
+                                <strong>{{$errors->first('g-recaptcha-response')}}</strong>
+                            </span>
+                            @endif
+                    </div>
                     <div class="input-form">
                         <p>Bạn Chưa Có Tài Khoản? <a href="registration.html">Đăng Ký</a></p>
                     </div>
+                    <form class="input-form" action="?" method="POST">
+                        <div class="g-recaptcha" data-sitekey="6Le_zMsaAAAAABRNTq18eyvhv9NanYlQkwg4uOVA"></div>
+                        <br/>
+                        <input type="submit" value="Submit">
+                    </form>
                 </form>
                 <h3>Đăng Nhập Bằng Mạng Xã Hội</h3>
                 <ul class="icon-dang-nhap">
@@ -68,6 +81,15 @@
         </div>
         <!--Kết Thúc Phần Nội Dung-->
     </section>
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer>
+    </script>
+    <script type="text/javascript">
+        var onloadCallback = function() {
+          alert("grecaptcha is ready!");
+        };
+      </script>
 </body>
 
 </html>

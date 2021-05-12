@@ -114,7 +114,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="product-layout product-grid col-md-4 col-xs-12 ">
+                <div class="product-layout  product-grid related-pro  owl-carousel mb_30 ">
                     @foreach($search_product as $key => $product)
                 <div class="item  col-xs-12 col-lg-12">
                     <div class="product-thumb clearfix mb_30">

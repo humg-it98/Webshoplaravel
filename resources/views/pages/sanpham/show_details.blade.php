@@ -46,6 +46,23 @@
                     {{ csrf_field() }}
                     <div class="col-md-4">
                         <div class="img_product"><a class="thumbnails"> <img data-name="product_image" src="{{URL::to('public/uploads/product/'.$value->product_image)}}" alt=""  /></a></div>
+                        <div id="product-thumbnail" class="owl-carousel">
+                            @foreach($product_images as $key => $img)
+                            <div class="item">
+                                <div class="image-additional" style="width=90px; height=90px"><a class="thumbnail" href="images/product/product3.jpg" data-fancybox="group1"> <img src="{{URL::to('public/uploads/product_img/'.$img->product_image_1)}}" alt="" /></a></div>
+                              </div>
+                              <div class="item">
+                                <div class="image-additional"><a class="thumbnail" href="images/product/product3.jpg" data-fancybox="group1"> <img src="{{URL::to('public/uploads/product_img/'.$img->product_image_2)}}" alt="" /></a></div>
+                              </div>
+                              <div class="item">
+                                <div class="image-additional"><a class="thumbnail" href="images/product/product3.jpg" data-fancybox="group1"> <img src="{{URL::to('public/uploads/product_img/'.$img->product_image_3)}}" alt="" /></a></div>
+                              </div>
+                              <div class="item">
+                                <div class="image-additional"><a class="thumbnail" href="images/product/product3.jpg" data-fancybox="group1"> <img src="{{URL::to('public/uploads/product_img/'.$img->product_image_4)}}" alt="" /></a></div>
+                              </div>
+                            @endforeach
+
+                          </div>
                     </div>
                     <div class="col-md-6 prodetail caption product-thumb">
                             <h4 data-name="product_name" class="product-name"><a href="#" title="Casual Shirt With Ruffle Hem">{{$value->product_name}}</a></h4>
@@ -157,6 +174,7 @@
                             <button type="submit" class="btn btn-md btn-link">Gửi đánh giá</button>
                             </div>
                         </div>
+                        <div class="fb-comments" data-href="{{$url_canonical}}" data-width="870" data-numposts="5"></div>
                         </div>
                     </form>
                     </div>
@@ -173,8 +191,8 @@
                 <h2 class="main_title mt_50">Sản phẩm liên quan</h2>
                 </div>
                 <div class="related_pro box">
-                @foreach($relate as $key => $lienquan)
                 <div class="product-layout  product-grid related-pro  owl-carousel mb_50 ">
+                    @foreach($relate as $key => $lienquan)
                     <div class="item">
                     <div class="product-thumb">
                         <div class="image product-imageblock"> <a href="{{URL::to('/chi-tiet-san-pham',$lienquan->product_id)}}"> <img data-name="product_image" src="{{URL::to('public/uploads/product/'.$lienquan->product_image)}}" class="img-responsive"><img src="{{URL::to('public/uploads/product/'.$lienquan->product_image)}}"> </a>
@@ -199,8 +217,8 @@
                         </div>
                     </div>
                     </div>
-                </div>
                 @endforeach
+                </div>
                 </div>
             </div>
             </div>
