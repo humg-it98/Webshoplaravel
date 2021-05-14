@@ -10,38 +10,32 @@ use Illuminate\Support\Facades\Redirect;
 use DB;
 class PartnerController extends Controller
 {
-	//  public function AuthLogin(){
-
-    //     if(Session::get('login_normal')){
-
-    //         $admin_id = Session::get('admin_id');
-    //     }else{
-    //         $admin_id = Auth::id();
-    //     }
-    //         if($admin_id){
-    //             return Redirect::to('dashboard');
-    //         }else{
-    //             return Redirect::to('admin')->send();
-    //         }
-
-
-    // }
+	public function AuthLogin(){
+        $admin_id = Session::get('admin_id');
+        if($admin_id){
+            return Redirect::to('dashboard');
+        }else{
+            return Redirect::to('admin')->send();
+        }
+    }
     public function manage_partner(){
+        $this->AuthLogin();
     	$all_partner = Partner::orderBy('partner_id','DESC')->paginate(8);
     	return view('admin.partner.list_partner')->with(compact('all_partner'));
     }
     public function add_partner(){
+        $this->AuthLogin();
     	return view('admin.partner.add_partner');
     }
-    public function unactive_partner($partner){
-        // $this->AuthLogin();
+    public function unactive_partner($partner_id){
+        $this->AuthLogin();
         DB::table('tbl_partner')->where('partner_id',$partner_id)->update(['partner_status'=>0]);
         Session::put('message','Không kích hoạt đối tác thành công');
         return Redirect::to('manage-partner');
 
     }
     public function active_partner($partner_id){
-        // $this->AuthLogin();
+        $this->AuthLogin();
         DB::table('tbl_partner')->where('partner_id',$partner_id)->update(['partner_status'=>1]);
         Session::put('message','Kích hoạt đối tác thành công');
         return Redirect::to('manage-partner');
@@ -49,9 +43,7 @@ class PartnerController extends Controller
     }
 
     public function insert_partner(Request $request){
-
-    	// $this->AuthLogin();
-
+    	$this->AuthLogin();
    		$data = $request->all();
        	$get_image = request('partner_image');
 
@@ -76,6 +68,7 @@ class PartnerController extends Controller
 
     }
     public function delete_partner(Request $request, $partner_id){
+        $this->AuthLogin();
         $partner = Partner::find($partner_id);
         $partner->delete();
         Session::put('message','Xóa đối tác thành công');

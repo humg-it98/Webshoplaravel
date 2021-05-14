@@ -10,38 +10,34 @@ use Illuminate\Support\Facades\Redirect;
 use DB;
 class SliderController extends Controller
 {
-	//  public function AuthLogin(){
-
-    //     if(Session::get('login_normal')){
-
-    //         $admin_id = Session::get('admin_id');
-    //     }else{
-    //         $admin_id = Auth::id();
-    //     }
-    //         if($admin_id){
-    //             return Redirect::to('dashboard');
-    //         }else{
-    //             return Redirect::to('admin')->send();
-    //         }
+	public function AuthLogin(){
+        $admin_id = Session::get('admin_id');
+        if($admin_id){
+            return Redirect::to('dashboard');
+        }else{
+            return Redirect::to('admin')->send();
+        }
+    }
 
 
-    // }
     public function manage_slider(){
+        $this->AuthLogin();
     	$all_slide = Slider::orderBy('slider_id','DESC')->paginate(5);
     	return view('admin.slider.list_slider')->with(compact('all_slide'));
     }
     public function add_slider(){
+        $this->AuthLogin();
     	return view('admin.slider.add_slider');
     }
     public function unactive_slide($slide_id){
-        // $this->AuthLogin();
+        $this->AuthLogin();
         DB::table('tbl_slider')->where('slider_id',$slide_id)->update(['slider_status'=>0]);
         Session::put('message','Không kích hoạt slider thành công');
         return Redirect::to('manage-slider');
 
     }
     public function active_slide($slide_id){
-        // $this->AuthLogin();
+        $this->AuthLogin();
         DB::table('tbl_slider')->where('slider_id',$slide_id)->update(['slider_status'=>1]);
         Session::put('message','Kích hoạt slider thành công');
         return Redirect::to('manage-slider');
@@ -50,7 +46,7 @@ class SliderController extends Controller
 
     public function insert_slider(Request $request){
 
-    	// $this->AuthLogin();
+    	$this->AuthLogin();
 
    		$data = $request->all();
        	$get_image = request('slider_image');
@@ -76,6 +72,7 @@ class SliderController extends Controller
 
     }
     public function delete_slide(Request $request, $slide_id){
+        $this->AuthLogin();
         $slider = Slider::find($slide_id);
         $slider->delete();
         Session::put('message','Xóa slider thành công');

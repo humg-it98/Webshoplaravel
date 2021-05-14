@@ -57,6 +57,29 @@ Route::post('/save-product','ProductController@save_product');
 Route::get('/add-images-product','ProductController@add_images_product');
 Route::post('/save-images-product','ProductController@save_images_product');
 
+//Danh  mục bài viết
+Route::get('/add-category-post','CategoryPost@add_category_post');
+Route::get('/all-category-post','CategoryPost@all_category_post');
+Route::get('/edit-category-post/{category_post_id}','CategoryPost@edit_category_post');
+Route::post('/update-category-post/{category_post_id}','CategoryPost@update_category_post');
+Route::get('/delete-category-post/{category_post_id}','CategoryPost@delete_category_post');
+Route::post('/save-category-post','CategoryPost@save_category_post');
+Route::get('/danh-muc-bai-viet/{cate_post_slug}','CategoryPost@danh_muc_bai_viet');
+
+//Bài viết
+Route::get('/add-post','PostController@add_post');
+Route::get('/all-post','PostController@all_post');
+Route::get('/delete-post/{post_id}','PostController@delete_post');
+Route::get('/edit-post/{post_id}','PostController@edit_post');
+Route::post('/save-post','PostController@save_post');
+Route::post('/update-post/{post_id}','PostController@update_post');
+
+//danh mục bài viết trang home
+// Route::get('/danh-muc-bai-viet/{cate_post_slug}','CategoryPost@danh_muc_bai_viet');
+Route::get('/danh-muc-bai-viet/{cate_post_slug}','PostController@danh_muc_bai_viet');
+// Route::get('/danh-muc-bai-viet/{post_slug}','PostController@danh_muc_bai_viet');
+Route::get('/bai-viet/{post_slug}','PostController@bai_viet');
+
 //Danh mục sp
 Route::get('/danh-muc-san-pham/{category_id}','CategoryProduct@show_category_home');
 Route::get('/thuong-hieu-san-pham/{brand_id}','BrandProduct@show_brand_home');
@@ -86,6 +109,14 @@ Route::get('/delete-slide/{slide_id}','SliderController@delete_slide');
 Route::post('/insert-slider','SliderController@insert_slider');
 Route::get('/unactive-slide/{slide_id}','SliderController@unactive_slide');
 Route::get('/active-slide/{slide_id}','SliderController@active_slide');
+
+//Đối tác liên kết
+Route::get('/manage-partner','PartnerController@manage_partner');
+Route::get('/add-partner','PartnerController@add_partner');
+Route::get('/delete-partner/{partner_id}','PartnerController@delete_partner');
+Route::post('/insert-partner','PartnerController@insert_partner');
+Route::get('/unactive-partner/{partner_id}','PartnerController@unactive_partner');
+Route::get('/active-partner/{partner_id}','PartnerController@active_partner');
 
 //Delivery
 Route::get('/delivery','DeliveryController@delivery');

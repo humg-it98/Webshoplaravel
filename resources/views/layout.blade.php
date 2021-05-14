@@ -51,7 +51,7 @@
         <div class="newsletter-popup"> <img class="offer" src={{asset("public/frontend/images/newsbg.jpg")}} alt="offer">
           <div class="newsletter-popup-static newsletter-popup-top">
             <div class="popup-text">
-              <div class="popup-title">Siêu giảm giá<span> tới 50% </span></div>
+              <div class="popup-title">Giảm <span> tới 50% </span></div>
               <div class="popup-desc">
                 <div>Đăng ký ngay để nhận ưu đãi lớn.</div>
               </div>
@@ -228,8 +228,20 @@
                       </li>
                     </ul>
                   </li>
-                  <li> <a href="category_page.html">Shop</a></li>
-                  <li> <a href="blog_page.html">Blog</a></li>
+                  <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">Danh mục Sp</a>
+                    <ul class="dropdown-menu">
+                        @foreach($category as $key => $danhmuc)
+                        <li><a href="{{URL::to('/danh-muc/'.$danhmuc->slug_category_product)}}">{{$danhmuc->category_name}}</a></li>
+                        @endforeach
+                    </ul>
+                  </li>
+                  <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tin tức</a>
+                    <ul class="dropdown-menu">
+                        @foreach($category_post as $key => $danhmucbaiviet)
+                        <li> <a href="{{URL::to('/danh-muc-bai-viet/'.$danhmucbaiviet->cate_post_slug)}}">{{$danhmucbaiviet->cate_post_name}}</a></li>
+                        @endforeach
+                    </ul>
+                  </li>
                   <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pages </a>
                     <ul class="dropdown-menu">
                       <li> <a href="cart_page.html">Cart</a></li>
@@ -294,6 +306,7 @@
 
         </div>
       </div>
+
       <!-- =====  CONTAINER END  ===== -->
       <!-- =====  FOOTER START  ===== -->
       <div class="footer pt_60">
