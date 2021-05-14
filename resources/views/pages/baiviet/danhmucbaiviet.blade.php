@@ -48,7 +48,7 @@
             @foreach($post_cate as $key => $p)
             <div class="blog-item col-md-6 mb_30">
               <div class="post-format">
-                <div class="thumb post-img"><a href="{{url('/bai-viet/'.$p->post_slug)}}"> <img src="{{asset('public/uploads/post/'.$p->post_image)}}" alt="{{$p->post_slug}}"></a></div>
+                <div class="thumb post-img"><a href="{{url('/bai-viet/'.$p->post_slug)}}"> <img style="height: 330px;width:400px" src="{{asset('public/uploads/post/'.$p->post_image)}}" alt="{{$p->post_slug}}"></a></div>
                 <div class="post-type"><i class="fa fa-music" aria-hidden="true"></i></div>
               </div>
               <div class="post-info mtb_20 ">
