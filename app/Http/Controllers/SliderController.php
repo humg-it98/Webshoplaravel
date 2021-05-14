@@ -27,7 +27,7 @@ class SliderController extends Controller
 
     // }
     public function manage_slider(){
-    	$all_slide = Slider::orderBy('slider_id','DESC')->paginate(2);
+    	$all_slide = Slider::orderBy('slider_id','DESC')->paginate(5);
     	return view('admin.slider.list_slider')->with(compact('all_slide'));
     }
     public function add_slider(){

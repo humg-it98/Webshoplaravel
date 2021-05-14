@@ -1,7 +1,7 @@
 @section('banner')
 <div class="main-banner owl-carousel">
-    @foreach($all_slider as $key => $slider)
-    <div class="item"><a href="#"><img src={{URL::to('public/uploads/product/'.$slider->slider_image)}} alt="{{$slider->name}}" class="img-responsive" /></a></div>
+    @foreach($slider as $key => $sli)
+    <div class="item"><a href="#"><img style="" src={{URL::to('public/uploads/slider/'.$sli->slider_image)}}  alt="{{$sli->name}}" class="img-responsive" height="120" width="500" /></a></div>
     @endforeach
 </div>
 
