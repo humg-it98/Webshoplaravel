@@ -79,23 +79,65 @@
               </div>
               <div class="col-xs-12 col-sm-8">
                 <ul class="header-top-right text-right">
-                  <li class="account"><a href="{{URL::to('/login-checkout')}}">Tài khoản của tôi</a></li>
-                  <li class="cart"><a href="{{URL::to('/checkout')}}">Thanh toán</a></li>
-                  <li class="cart"><a href="{{URL::to('/gio-hang')}}">Giỏ hàng</a></li>
-                  <li class="currency dropdown"> <span class="dropdown-toggle" id="dropdownMenu12" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">Yêu thích <span class="caret"></span> </span>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu12">
-                      <li><a href="#">1</a></li>
-                      <li><a href="#">2</a></li>
-                    </ul>
-                  </li>
+                  <li><a href="{{URL::to('/yeu-thich')}}"><i class="fa fa-star"></i> Yêu thích</a></li>
                   <?php
-                      $customer_id = Session::get('customer_id');
-                      $shipping_id = Session::get('shipping_id');
-                      if($customer_id!=NULL && $shipping_id==NULL)
-                      {
+                     $customer_id = Session::get('customer_id');
+                     $shipping_id = Session::get('shipping_id');
+                     if($customer_id!=NULL && $shipping_id==NULL){
+                   ?>
+                    <li><a href="{{URL::to('/checkout')}}"><i class="fa fa-crosshairs"></i> Thanh toán</a></li>
 
-                      }
+                  <?php
+                   }elseif($customer_id!=NULL && $shipping_id!=NULL){
+                   ?>
+                   <li><a href="{{URL::to('/payment')}}"><i class="fa fa-crosshairs"></i> Thanh toán</a></li>
+                   <?php
+                  }else{
                   ?>
+                   <li><a href="{{URL::to('/dang-nhap')}}"><i class="fa fa-crosshairs"></i> Thanh toán</a></li>
+                  <?php
+                   }
+                  ?>
+
+
+                  <li><a href="{{URL::to('/gio-hang')}}"><i class="fa fa-shopping-cart"></i> Giỏ hàng</a></li>
+
+                  @php
+                      $customer_id = Session::get('customer_id');
+                      if($customer_id!=NULL){
+                      @endphp
+
+                      <li>
+                          <a href="{{URL::to('history')}}"><i class="fa fa-bell"></i> Lịch sử đơn hàng </a>
+
+                      </li>
+
+
+                     @php
+                      }
+                     @endphp
+
+                  <?php
+                  $customer_id = Session::get('customer_id');
+                  if($customer_id!=NULL){
+                      ?>
+
+                      <li>
+                          <a href="{{URL::to('/logout-checkout')}}"><i class="fa fa-lock"></i> Đăng xuất : </a>
+
+                          <img width="15%" src="{{Session::get('customer_picture')}}"> {{Session::get('customer_name')}}
+
+                      </li>
+
+
+                      <?php
+                  }else{
+                     ?>
+                     <li><a href="{{URL::to('/dang-nhap')}}"><i class="fa fa-lock"></i> Đăng nhập</a></li>
+                     <?php
+                 }
+                 ?>
+
                 </ul>
               </div>
             </div>
@@ -118,20 +160,23 @@
               <div class="col-xs-6 col-sm-4 shopcart">
                 <form action="" method="">
                 <div id="cart" class="btn-group btn-block mtb_40">
-                  <button type="button" class="btn" data-target="#cart-dropdown" data-toggle="collapse" aria-expanded="true"><span id="shippingcart">Shopping cart</span><span id="cart-total">items (0)</span> </button>
+                  <button type="button" class="btn" data-target="#cart-dropdown" data-toggle="collapse" aria-expanded="true"><span id="shippingcart">Shopping cart</span><span id="cart-total">items ({{Cart::content()->count()}})</span> </button>
                 </div>
                 <div id="cart-dropdown" class="cart-menu collapse">
                   <ul>
                     <li>
                       <table class="table table-striped">
                         <tbody>
+                            @foreach (Cart::content() as $item)
                               <tr>
-                              <td class="text-center"><a href="#"><img src={{asset("public/frontend/images/product/70x84.jpg")}} alt="iPod Classic" title="iPod Classic"></a></td>
-                              <td class="text-left product-name"><a href="#">MacBook Pro</a> <span class="text-left price">$20.00</span>
-                                  <input class="cart-qty" name="product_quantity" min="1" value="1" type="number">
+                              <td class="text-center"><a href="#"><img  src="{{URL::to('public/uploads/product/'.$item->options->image)}}" height="80px" width="80px"></a></td>
+                              <td class="text-left product-name"><a href="#">{{$item->name}}</a> <span class="text-left price">${{$item->price}}</span>
+                                  <input class="cart-qty" name="product_quantity" min="1" value="{{$item->qty}}" type="number">
                               </td>
-                              <td class="text-center"><a class="close-cart"><i class="fa fa-times-circle"></i></a></td>
+                              <td class="text-center"><a class="close-cart" href="{{URL::to('/save-cart')}}"><i class="fa fa-times-circle"></i></a></td>
                               </tr>
+                              @endforeach
+
                         </tbody>
                       </table>
                     </li>
@@ -139,29 +184,29 @@
                       <table class="table">
                         <tbody>
                           <tr>
-                            <td class="text-right"><strong>Sub-Total</strong></td>
-                            <td class="text-right">$2,100.00</td>
+                            <td class="text-right"><strong>Tạm tính</strong></td>
+                            <td class="text-right">{{Cart::subtotal()}}</td>
                           </tr>
                           <tr>
-                            <td class="text-right"><strong>Eco Tax (-2.00)</strong></td>
-                            <td class="text-right">$2.00</td>
+                            <td class="text-right"><strong>Thuế</strong></td>
+                            <td class="text-right">0</td>
                           </tr>
                           <tr>
-                            <td class="text-right"><strong>VAT (20%)</strong></td>
-                            <td class="text-right">$20.00</td>
+                            <td class="text-right"><strong>Phí vận chuyển</strong></td>
+                            <td class="text-right">0</td>
                           </tr>
                           <tr>
-                            <td class="text-right"><strong>Total</strong></td>
-                            <td class="text-right">$2,122.00</td>
+                            <td class="text-right"><strong>Tổng tiền:</strong></td>
+                            <td class="text-right">{{Cart::subtotal()}}</td>
                           </tr>
                         </tbody>
                       </table>
                     </li>
                     <li>
-                      <form action="/show-cart">
+                      <form action={{URL::to("/show-cart")}}>
                         <input class="btn pull-left mt_10" value="View cart" type="submit">
                       </form>
-                      <form action="checkout_page.html">
+                      <form action={{URL::to("/login-checkout")}}>
                         <input class="btn pull-right mt_10" value="Checkout" type="submit">
                       </form>
                     </li>
@@ -299,7 +344,7 @@
           </div>
         </div>
         <div class="row ">
-            <div class="fb-like" data-href="{{$url_canonical}}" data-width="" data-layout="standard" data-action="like" data-size="small" data-share="true"></div>
+            {{-- <div class="fb-like" data-href="{{$url_canonical}}" data-width="" data-layout="standard" data-action="like" data-size="small" data-share="true"></div> --}}
             <!-- =====  PRODUCT TAB vừa cắt ===== -->
           @yield('content')
             <!-- =====  PRODUCT TAB  END ===== -->
@@ -389,7 +434,7 @@
                 </div>
               </div>
               <div class="col-sm-4">
-                <div class="copyright-part text-center">@2021 Website phát triển bởi <a target="self" href="https://www.facebook.com/ngocnt.5792/">Nguyễn Tuấn Ngọc</a></div>
+                <div class="copyright-part text-center">@2021 Website phát triển 💙 Nguyễn Tuấn Ngọc</div>
               </div>
               <div class="col-sm-4">
                 <div class="payment-icon text-right">
@@ -437,32 +482,46 @@
                 var cart_product_price = $('.cart_product_price_' + id).val();
                 var cart_product_qty = $('.cart_product_qty_' + id).val();
                 var _token = $('input[name="_token"]').val();
-                alert( 'Đã thêm vào giỏ hàng');
+                // alert( 'Đã thêm vào giỏ hàng');
                 // alert( cart_product_name);
-                // $.ajax({
-                //     url: '{{url('/add-cart-ajax')}}',
-                //     method: 'POST',
-                //     data:{cart_product_id:cart_product_id,cart_product_name:cart_product_name,cart_product_image:cart_product_image,cart_product_price:cart_product_price,cart_product_qty:cart_product_qty,_token:_token},
-                //     success:function(){
+                $.ajax({
+                    url: '{{url('/add-cart-ajax')}}',
+                    method: 'POST',
+                    data:{cart_product_id:cart_product_id,cart_product_name:cart_product_name,cart_product_image:cart_product_image,cart_product_price:cart_product_price,cart_product_qty:cart_product_qty,_token:_token},
+                    success:function(data){
+                        swal({
+                                title: "Đã thêm sản phẩm vào giỏ hàng",
+                                text: "Bạn có thể mua hàng tiếp hoặc tới giỏ hàng để tiến hành thanh toán",
+                                showCancelButton: true,
+                                cancelButtonText: "Xem tiếp",
+                                confirmButtonClass: "btn-success",
+                                confirmButtonText: "Đi đến giỏ hàng",
+                                closeOnConfirm: false
+                            },
+                            function() {
+                                window.location.href = "{{url('/gio-hang')}}";
+                            });
+                    }
 
-                //         swal({
-                //                 title: "Đã thêm sản phẩm vào giỏ hàng",
-                //                 text: "Bạn có thể mua hàng tiếp hoặc tới giỏ hàng để tiến hành thanh toán",
-                //                 showCancelButton: true,
-                //                 cancelButtonText: "Xem tiếp",
-                //                 confirmButtonClass: "btn-success",
-                //                 confirmButtonText: "Đi đến giỏ hàng",
-                //                 closeOnConfirm: false
-                //             },
-                //             function() {
-                //                 window.location.href = "{{url('/gio-hang')}}";
-                //             });
-
-                //     }
-
-                // });
+                });
             });
         });
+    </script>
+
+    <script>
+    $(function() {
+      $("#slider-range").slider({
+        range: true,
+        min: 0,
+        max: 500,
+        values: [75, 300],
+        slide: function(event, ui) {
+          $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+        }
+      });
+      $("#amount").val("$" + $("#slider-range").slider("values", 0) +
+        " - $" + $("#slider-range").slider("values", 1));
+    });
     </script>
 
 

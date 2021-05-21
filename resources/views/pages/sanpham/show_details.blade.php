@@ -9,8 +9,10 @@
             <h1>Chi tiết sản phẩm...</h1>
             <ul>
                 <li><a href="{{URL::to('/')}}">Trang chủ</a></li>
-                <li><a href="category_page.html">Sản phẩm</a></li>
-                <li class="active">...</li>
+                <li><a href="">Sản phẩm</a></li>
+                @foreach($product_details as $key => $value)
+                <li class="active">{{$value->product_name}}</li>
+                @endforeach
             </ul>
             </div>
         </div>
@@ -45,20 +47,23 @@
                 <form action="{{URL::to('/save-cart')}}" method="POST">
                     {{ csrf_field() }}
                     <div class="col-md-4">
-                        <div class="img_product"><a class="thumbnails"> <img data-name="product_image" src="{{URL::to('public/uploads/product/'.$value->product_image)}}" alt=""  /></a></div>
+                        <div class="img_product"><a class="thumbnails" href="{{URL::to('public/uploads/product/'.$value->product_image)}}"> <img data-name="product_image" src="{{URL::to('public/uploads/product/'.$value->product_image)}}" alt=""  /></a></div>
                         <div id="product-thumbnail" class="owl-carousel">
                             @foreach($product_images as $key => $img)
                             <div class="item">
-                                <div class="image-additional" style="width=90px; height=90px"><a class="thumbnail" href="images/product/product3.jpg" data-fancybox="group1"> <img src="{{URL::to('public/uploads/product_img/'.$img->product_image_1)}}" alt="" /></a></div>
+                                <div class="image-additional"><a class="thumbnail" href="{{URL::to('public/uploads/product_img/'.$img->product_image_1)}}" data-fancybox="group1"> <img style="width=65px;height=65px" src="{{URL::to('public/uploads/product_img/'.$img->product_image_1)}}" alt="" /></a></div>
                               </div>
                               <div class="item">
-                                <div class="image-additional"><a class="thumbnail" href="images/product/product3.jpg" data-fancybox="group1"> <img src="{{URL::to('public/uploads/product_img/'.$img->product_image_2)}}" alt="" /></a></div>
+                                <div class="image-additional"><a class="thumbnail" href="{{URL::to('public/uploads/product_img/'.$img->product_image_2)}}" data-fancybox="group1"> <img style="width=65px;height=65px" src="{{URL::to('public/uploads/product_img/'.$img->product_image_2)}}" alt="" /></a></div>
                               </div>
                               <div class="item">
-                                <div class="image-additional"><a class="thumbnail" href="images/product/product3.jpg" data-fancybox="group1"> <img src="{{URL::to('public/uploads/product_img/'.$img->product_image_3)}}" alt="" /></a></div>
+                                <div class="image-additional"><a class="thumbnail" href="{{URL::to('public/uploads/product_img/'.$img->product_image_3)}}" data-fancybox="group1"> <img style="width=65px;height=65px" src="{{URL::to('public/uploads/product_img/'.$img->product_image_3)}}" alt="" /></a></div>
                               </div>
                               <div class="item">
-                                <div class="image-additional"><a class="thumbnail" href="images/product/product3.jpg" data-fancybox="group1"> <img src="{{URL::to('public/uploads/product_img/'.$img->product_image_4)}}" alt="" /></a></div>
+                                <div class="image-additional"><a class="thumbnail" href="{{URL::to('public/uploads/product_img/'.$img->product_image_4)}}" data-fancybox="group1"> <img style="width=65px;height=65px" src="{{URL::to('public/uploads/product_img/'.$img->product_image_4)}}" alt="" /></a></div>
+                              </div>
+                              <div class="item">
+                                <div class="image-additional"><a class="thumbnail" href="{{URL::to('public/uploads/product_img/'.$img->product_image_5)}}" data-fancybox="group1"> <img style="width=65px;height=65px" src="{{URL::to('public/uploads/product_img/'.$img->product_image_5)}}" alt="" /></a></div>
                               </div>
                             @endforeach
 
@@ -73,7 +78,7 @@
                                 <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i><i class="fa fa-star fa-stack-1x"></i></span>
                                 <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i><i class="fa fa-star fa-stack-x"></i></span>
                             </div>
-                                <span class="price mb_20"><span class="amount"><span class="currencySymbol" >Giá: </span>{{number_format($value->product_price).'VNĐ'}}</span>
+                                <span class="price mb_20"><span class="amount"><span class="currencySymbol" >Giá: </span>{{number_format((int)$value->product_price).' VNĐ'}}</span>
                                 </span>
                                 <hr>
                                 <ul class="list-unstyled product_info mtb_20">
@@ -91,26 +96,29 @@
                                     <span> Còn hàng</span></li>
                                 </ul>
                                 <hr>
-                                <p class="product-desc mtb_30">Mô tả sp: {{$value->product_desc}}</p>
+                                <p class="product-desc mtb_30"><b>Mô tả sản phẩm:</b> {!!$value->product_desc!!} </p>
                                 <div id="product">
                                 <div class="form-group">
                                     <div class="row">
                                     <div class="Sort-by col-md-6">
-                                        <label>Chất liệu dây:</label>
-                                        <select name="product_size" id="select-by-size" class="selectpicker form-control">
-                                        <option>Dây da</option>
-                                        <option>Dây cao su</option>
+                                        <label>Màu sắc khác:</label>
+                                        <select name="product_size" id="select-by-color" class="selectpicker form-control">
+                                        <option>Đen</option>
+                                        <option>Trắng</option>
                                         </select>
                                     </div>
                                     <div class="Color col-md-6">
-                                        <label>Kích thước mặt đồng hồ:</label>
-                                        <select name="product_color" id="select-by-color" class="selectpicker form-control">
-                                        <option>Women’s Mini (đồng hồ nữ – size nhỏ): 23mm – 25mm</option>
-                                        <option>Women’s Regular (đồng hồ nữ – size thông thường): 26mm – 29mm</option>
-                                        <option>Midsize – Unisex (nam hoặc nữ đều đeo được): 34mm – 36mm</option>
-                                        <option>Men’s Regular (đồng hồ nam – size thông thường): 37mm – 39mm</option>
-                                        <option>Men’s Sport (đồng hồ nam – size thể thao): 40mm – 42mm</option>
-                                        <option>Men’s XL (đồng hồ nam – size lớn, rất lớn): 45mm</option>
+                                        <label>Size:</label>
+                                        <select name="product_color" id="select-by-size" class="selectpicker form-control">
+                                        <option>36</option>
+                                        <option>37</option>
+                                        <option>38</option>
+                                        <option>39</option>
+                                        <option>40</option>
+                                        <option>41</option>
+                                        <option>42</option>
+                                        <option>43</option>
+                                        <option>44</option>
                                         </select>
                                     </div>
                                     </div>
@@ -139,7 +147,7 @@
                 </ul>
                 <div class="tab-content ">
                     <div class="tab-pane active pt_20" id="1c">
-                    <p>{{$value->product_desc}}</p>
+                    <p>{!!$value->product_desc!!}</p>
                     </div>
                     <div class="tab-pane" id="2c">
                     <form class="form-horizontal">
@@ -174,12 +182,12 @@
                             <button type="submit" class="btn btn-md btn-link">Gửi đánh giá</button>
                             </div>
                         </div>
-                        <div class="fb-comments" data-href="{{$url_canonical}}" data-width="870" data-numposts="5"></div>
+                        <div class="fb-comments" style="color:#blue" data-href="{{$url_canonical}}" data-width="870" data-numposts="5"></div>
                         </div>
                     </form>
                     </div>
                     <div class="tab-pane pt_20" id="3c">
-                    <p>{{$value->product_content}}</p>
+                    <p>{!!$value->product_content!!}</p>
                     </div>
                 </div>
                 </div>
@@ -212,7 +220,7 @@
                             <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i><i class="fa fa-star fa-stack-1x"></i></span>
                             <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i><i class="fa fa-star fa-stack-x"></i></span>
                         </div>
-                        <span class="price"><span class="amount"><span class="currencySymbol">Giá sản phẩm: </span>{{number_format($lienquan->product_price).'VNĐ'}}</span>
+                        <span class="price"><span class="amount"><span class="currencySymbol">Giá: </span>{{number_format((int)$lienquan->product_price).' VNĐ'}}</span>
                         </span>
                         </div>
                     </div>
@@ -233,7 +241,9 @@
             <div class="row">
             <div class="col-sm-12">
                 <div class="brand owl-carousel ptb_20">
-                <div class="item text-center"> <a href="#"><img src={{asset("public/frontend/images/brand/brand1.png")}} alt="Disney" class="img-responsive" /></a> </div>
+                    @foreach($partner as $key => $par)
+                    <div class="item text-center"> <a href="#"><img src={{URL::to('public/uploads/partner/'.$par->partner_image)}}  alt="{{$par->name}}" class="img-responsive" /></a> </div>
+                    @endforeach
                 </div>
             </div>
         </div>

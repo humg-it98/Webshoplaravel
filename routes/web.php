@@ -34,6 +34,8 @@ Route::get('/edit-category-product/{category_product_id}','CategoryProduct@edit_
 Route::post('/update-category-product/{category_product_id}','CategoryProduct@update_category_product');
 Route::get('/delete-category-product/{category_product_id}','CategoryProduct@delete_category_product');
 Route::post('/save-category-product','CategoryProduct@save_category_product');
+Route::post('/export-csv','CategoryProduct@export_csv');
+Route::post('/import-csv','CategoryProduct@import_csv');
 
 //Brand product
 Route::get('/add-brand-product','BrandProduct@add_brand_product');
@@ -75,9 +77,7 @@ Route::post('/save-post','PostController@save_post');
 Route::post('/update-post/{post_id}','PostController@update_post');
 
 //danh mục bài viết trang home
-// Route::get('/danh-muc-bai-viet/{cate_post_slug}','CategoryPost@danh_muc_bai_viet');
 Route::get('/danh-muc-bai-viet/{cate_post_slug}','PostController@danh_muc_bai_viet');
-// Route::get('/danh-muc-bai-viet/{post_slug}','PostController@danh_muc_bai_viet');
 Route::get('/bai-viet/{post_slug}','PostController@bai_viet');
 
 //Danh mục sp
@@ -93,6 +93,9 @@ Route::get('/update-cart-quantity','CartController@update_cart');
 //Cart dùng Ajax
 Route::post('/add-cart-ajax','CartController@add_cart_ajax');
 Route::get('/gio-hang','CartController@gio_hang');
+Route::get('/del-product/{session_id}','CartController@del_product');
+Route::post('/cap-nhat-gio-hang','CartController@update_cart_ajax');
+Route::get('/del-all-product','CartController@del_all_product');
 
 //Coupon
 Route::post('/check-coupon','CouponController@check_coupon');
@@ -100,7 +103,7 @@ Route::get('/insert-coupon','CouponController@insert_coupon');
 Route::post('/insert-coupon-code','CouponController@insert_coupon_code');
 Route::get('/list-coupon','CouponController@list_coupon');
 Route::get('/delete-coupon/{coupon_id}','CouponController@delete_coupon');
-Route::get('/unset-coupon','CouponController@unset_coupon');
+Route::get('/unset-coupon','CartController@unset_coupon');
 
 //Banner
 Route::get('/manage-slider','SliderController@manage_slider');
@@ -123,6 +126,7 @@ Route::get('/delivery','DeliveryController@delivery');
 
 //Check-out
 Route::get('/login-checkout','CheckoutController@login_checkout');
+// Route::get('/dang-nhap','CheckoutController@login_checkout');
 Route::post('/logout-checkout','CheckoutController@logout_checkout');
 Route::post('/add-customer','CheckoutController@add_customer');
 Route::get('/checkout','CheckoutController@checkout');

@@ -97,10 +97,9 @@
                                 <div class="form-group required">
                                 <label for="input-shipping-zone" class="col-sm-2 control-label">Phường, xã</label>
                                 <div class="col-sm-10">
-                                    <select class="form-control" id="input-shipping-zone" name="zone_id">
+                                    <select class="form-control" name="province" id="province">
                                     <option value=""> --- Please Select --- </option>
-                                    <option value="3121">Hàng trống</option>
-                                    <option value="3122">Hàng Bè</option>
+                                    <option value="">HN</option>
                                     </select>
                                 </div>
                                 </div>
@@ -149,28 +148,47 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php
-                                $content = Cart::content();
-                                ?>
-                            @foreach($content as $item)
+                                @if(Session::get('cart')==true)
+                                @php
+                                    $total = 0;
+                                @endphp
+                                @foreach(Session::get('cart') as $item => $cart)
+                                @php
+                                      $subtotal = $cart['product_price']*$cart['product_qty'];
+                                      $total += $subtotal;
+                                @endphp
                                 <tr>
-                                    <td class="text-left"><a href="product.html"> {{$item->name}}</a></td>
-                                    <td class="text-center">{{$item->id}}</td>
-                                    <td class="text-center">{{$item->qty}}</td>
-                                    <td class="text-right">{{number_format($item->price).' VNĐ'}}</td>
-                                    <td class="text-right">
-                                        <?php
-                                            $subtotal= $item->price * $item->qty;
-                                            echo number_format($subtotal).' VNĐ';
-                                        ?>
-                                    </td>
+                                  <td class="text-left"><a href="">{{$cart['product_name']}}</a></td>
+                                  <td class="text-left">{{$cart['product_id']}}</td>
+                                  <td class="text-left">
+                                        <div style="max-width: 300px;" class="input-group btn-block">
+                                        <input type="number" min="1" class="cart_quantity" size="1" value="{{$cart['product_qty']}}" name="cart_qty[{{$cart['session_id']}}]">
+                                        <input type="hidden" value="" name="rowId_cart" class="form-control">
+                                        <span class="input-group-btn">
+                                        {{-- <button class="btn btn-primary btn-sm" title="" data-toggle="tooltip" type="submit" data-original-title="Update" ><i class="fa fa-refresh"></i></a></button> --}}
+                                        <button class="btn btn-primary btn-sm" title="" data-toggle="tooltip" type="button" data-original-title="Remove"><a  href="{{url('del-product/'.$cart['session_id'])}}"><i class="fa fa-times-circle"></i></a></button>
+                                        </span></div>
+                                  </td>
+                                  <td class="text-right">{{number_format($cart['product_price']).'VNĐ'}}</td>
+                                  <td class="text-right">{{number_format($subtotal).'VNĐ'}}</td>
                                 </tr>
                                 @endforeach
-                            </tbody>
+                                <br>
+                                <td> <input type="submit" value="Cập nhật giỏ hàng" name="update_qty" class="check_out btn btn-default btn-sm"></td>
+                                @else
+                                    <tr>
+                                        <td colspan="6"><center><b>
+                                        @php
+                                        echo 'Làm ơn thêm sản phẩm vào giỏ hàng';
+                                        @endphp
+                                        </b></center></td>
+                                    </tr>
+                                    @endif
+                              </tbody>
                             <tfoot>
                                 <tr>
                                 <td class="text-right" colspan="4"><strong>Tạm tính:</strong></td>
-                                <td class="text-right">{{Cart::subtotal().' '.'vnđ'}}</td>
+                                <td class="text-right">{{number_format($total).'VNĐ'}}</td>
                                 </tr>
                                 <tr>
                                 <td class="text-right" colspan="4"><strong>Tiền thuế:</strong></td>
@@ -178,7 +196,7 @@
                                 </tr>
                                 <tr>
                                 <td class="text-right" colspan="4"><strong>Tổng:</strong></td>
-                                <td class="text-right">{{Cart::subtotal().' '.'vnđ'}}</td>
+                                <td class="text-right">{{number_format($total).'VNĐ'}}</td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -195,22 +213,23 @@
        </div>
      </div>
    </div>
-   <div id="brand_carouse" class="ptb_30 text-center">
-     <div class="type-01">
-       <div class="heading-part mb_20 ">
-         <h2 class="main_title">Đối tác liên kết</h2>
-       </div>
-       <div class="row">
-         <div class="col-sm-12">
-           <div class="brand owl-carousel ptb_20">
-             <div class="item text-center"> <a href="#"><img src="public/frontend/images/brand/brand1.png" alt="Disney" class="img-responsive" /></a> </div>
-             <div class="item text-center"> <a href="#"><img src="public/frontend/images/brand/brand2.png" alt="Dell" class="img-responsive" /></a> </div>
-           </div>
-         </div>
-       </div>
-     </div>
-   </div>
- </div>
+   <div id="brand_carouse" class="ptb_60 text-center">
+    <div class="type-01">
+      <div class="heading-part mb_10 ">
+        <h2 class="main_title">Đối tác liên kết</h2>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="brand owl-carousel ptb_20">
+              @foreach($partner as $key => $par)
+              <div class="item text-center"> <a href="#"><img src={{URL::to('public/uploads/partner/'.$par->partner_image)}}  alt="{{$par->name}}" class="img-responsive" /></a> </div>
+              @endforeach
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
  <!-- =====  CONTAINER END  ===== -->
 
 @endsection

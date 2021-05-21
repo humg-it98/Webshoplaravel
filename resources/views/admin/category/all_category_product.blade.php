@@ -43,6 +43,7 @@
                 </label>
               </th>
               <th>Tên danh mục</th>
+              <th>Slug </th>
               <th>Hiển thị</th>
               <th style="width:30px;"></th>
             </tr>
@@ -53,6 +54,7 @@
             <tr>
               <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
               <td>{{ $cate_pro->category_name}}</td>
+              <td>{{ $cate_pro->slug_category_product}}</td>
               <td><span class="text-ellipsis">
                   <?php
                   if($cate_pro->category_status==0){
@@ -79,6 +81,20 @@
              @endforeach
           </tbody>
         </table>
+         <!-----import data---->
+            <form action="{{url('import-csv')}}" method="POST" enctype="multipart/form-data">
+                @csrf
+
+            <input type="file" name="file" accept=".xlsx"><br>
+
+            <input type="submit" value="Import file Excel" name="import_csv" class="btn btn-warning">
+            </form>
+
+        <!-----export data---->
+            <form action="{{url('export-csv')}}" method="POST">
+                @csrf
+            <input type="submit" value="Export file Excel" name="export_csv" class="btn btn-success">
+            </form>
       </div>
       <footer class="panel-footer">
         <div class="row">

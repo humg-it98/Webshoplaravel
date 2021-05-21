@@ -43,6 +43,8 @@
                 </label>
               </th>
               <th>Tên sản phẩm</th>
+              <th>Slug sản phẩm</th>
+              <th>Số lượng sản phẩm</th>
               <th>Giá sản phẩm</th>
               <th>Hình sản phẩm</th>
               <th>Danh mục sản phẩm</th>
@@ -56,11 +58,13 @@
 
             <tr>
               <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
-              <td>{{ $pro->product_name}}</td>
-              <td>{{ $pro->product_price}}</td>
+              <td>{{$pro->product_name}}</td>
+              <td>{{$pro->product_slug}}</td>
+              <td>{{$pro->product_quantity}}</td>
+              <td>{{number_format($pro->product_price).' đ'}}</td>
               <td><img src ="public/uploads/product/{{ $pro->product_image}}" heght="100" width="100"></td>
-              <td>{{ $pro->category_name}} </td>
-              <td>{{ $pro->brand_name}}</td>
+              <td>{{$pro->category_name}} </td>
+              <td>{{$pro->brand_name}}</td>
               <td><span class="text-ellipsis">
                   <?php
                   if($pro->product_status==0){

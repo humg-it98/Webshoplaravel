@@ -20,7 +20,7 @@
              <div class="alert alert-danger">
                 {!! session()->get('error') !!}
             </div>
-        @endif
+            @endif
         </div>
         <!-- =====  BREADCRUMB END===== -->
         <div id="column-left" class="col-sm-4 col-lg-3 hidden-xs">

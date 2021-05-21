@@ -23,7 +23,7 @@
                     <input type="hidden" value="1" class="cart_product_qty_{{$product->product_id}}">
 
                     <div class="product-thumb">
-                        <div class="image product-imageblock"> <a href="{{URL::to('/chi-tiet-san-pham',$product->product_id)}}"> <img data-name="product_image" src={{URL::to("public/uploads/product/".$product->product_image)}} height="220px" width="220px" alt="{{($product->product_name)}}" title="{{($product->product_name)}}" class="img-responsive"> <img src={{URL::to("public/uploads/product/".$product->product_image)}} height="220px" width="220px" alt="{{($product->product_name)}}" title="{{($product->product_name)}}" class="img-responsive"> </a>
+                        <div class="image product-imageblock"> <a href="{{URL::to('/chi-tiet-san-pham',$product->product_id)}}"> <img style="height:250px;width:250px" data-name="product_image" src={{URL::to("public/uploads/product/".$product->product_image)}} alt="{{($product->product_name)}}" title="{{($product->product_name)}}" class="img-responsive"> <img src={{URL::to("public/uploads/product/".$product->product_image)}} height="220px" width="220px" alt="{{($product->product_name)}}" title="{{($product->product_name)}}" class="img-responsive"> </a>
                         <div class="button-group text-center">
                             <div class="wishlist"><a href="#"><span>Thêm yêu thích</span></a></div>
                             <div class="quickview"><a href="#"><span>Chi tiết sản phẩm</span></a></div>
@@ -34,7 +34,7 @@
                         <div class="caption product-detail text-center">
                         <div class="rating"> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i><i class="fa fa-star fa-stack-1x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i><i class="fa fa-star fa-stack-1x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i><i class="fa fa-star fa-stack-1x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i><i class="fa fa-star fa-stack-1x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i><i class="fa fa-star fa-stack-x"></i></span> </div>
                         <h6 data-name="product_name" class="product-name"><a href="#" title="Casual Shirt With Ruffle Hem">{{($product->product_name)}}</a></h6>
-                        <span class="price"><span class="amount"><span class="currencySymbol">Giá: </span>{{number_format($product->product_price).'VNĐ'}}</span>
+                        <span class="price"><span class="amount"><span class="currencySymbol">Giá: </span>{{number_format((int)$product->product_price).' VNĐ'}}</span>
                         </span>
                         </div>
                     </div>
@@ -100,7 +100,7 @@
     <div class="cms_banner">
       <div class="col-xs-12 mt_60">
         <div id="subbanner4" class="sub-hover">
-          <div class="sub-img"><a href="#"><img src="public/frontend/images/sub5.jpg" alt="Sub Banner5" class="img-responsive"></a></div>
+          <div class="sub-img"><a href="#"><img style="height: 400px;width:1200px" src="public/frontend/images/banner.jpg" alt="Sub Banner5" class="img-responsive"></a></div>
         </div>
       </div>
     </div>
@@ -140,86 +140,31 @@
       <!-- =====  Blog ===== -->
       <div id="Blog" class="mt_50">
         <div class="heading-part mb_10 ">
-          <h2 class="main_title">Latest News</h2>
+          <h2 class="main_title">Bài viết mới nhất</h2>
         </div>
         <div class="blog-contain box">
           <div class="blog owl-carousel ">
+            @foreach($all_post as $key => $all_baiviet)
             <div class="item">
               <div class="box-holder">
-                <div class="thumb post-img"><a href="#"> <img src="public/frontend/images/blog/blog_img_01.jpg" alt="themini"> </a>
+                <div class="thumb post-img"><a href="{{url('/bai-viet/'.$all_baiviet->post_slug)}}"> <img style="height: 330px;width:600px" src="{{asset('public/uploads/post/'.$all_baiviet->post_image)}}" alt="{{$all_baiviet->post_slug}}"> </a>
                   <div class="date-time text-center">
                     <div class="day"> 11</div>
                     <div class="month">Aug</div>
                   </div>
                   <div class="post-image-hover"> </div>
                   <div class="post-info">
-                    <h6 class="mb_10 text-uppercase"> <a href="single_blog.html">Fashions fade, style is eternal</a> </h6>
-                    <p>Aliquam egestas pellentesque est. Etiam a orci Nulla id enim feugiat ligula ullamcorper scelerisque. Morbi eu luctus nisl.</p>
+                    <h6 class="mb_10 text-uppercase"> <a href="{{url('/bai-viet/'.$all_baiviet->post_slug)}}">{{$all_baiviet->post_title}}</a> </h6>
+                    <p>{!!$all_baiviet->post_desc!!}</p>
                     <div class="view-blog">
-                      <div class="write-comment pull-left"> <a href="single_blog.html"> 0 Comments</a> </div>
-                      <div class="read-more pull-right"> <a href="single_blog.html"> <i class="fa fa-link"></i> read more</a> </div>
+                      <div class="write-comment pull-left"> <a href="{{url('/bai-viet/'.$all_baiviet->post_slug)}}">{!!$all_baiviet->post_views!!} Bình luận</a> </div>
+                      <div class="read-more pull-right"> <a href="{{url('/bai-viet/'.$all_baiviet->post_slug)}}"> <i class="fa fa-link"></i> Đọc thêm</a> </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="item">
-              <div class="box-holder">
-                <div class="thumb post-img"><a href="#"> <img src="public/frontend/images/blog/blog_img_02.jpg" alt="themini"> </a>
-                  <div class="date-time text-center">
-                    <div class="day"> 11</div>
-                    <div class="month">Aug</div>
-                  </div>
-                  <div class="post-image-hover"> </div>
-                  <div class="post-info">
-                    <h6 class="mb_10 text-uppercase"> <a href="single_blog.html">Fashions fade, style is eternal</a> </h6>
-                    <p>Aliquam egestas pellentesque est. Etiam a orci Nulla id enim feugiat ligula ullamcorper scelerisque. Morbi eu luctus nisl.</p>
-                    <div class="view-blog">
-                      <div class="write-comment pull-left"> <a href="single_blog.html"> 0 Comments</a> </div>
-                      <div class="read-more pull-right"> <a href="single_blog.html"> <i class="fa fa-link"></i> read more</a> </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="box-holder">
-                <div class="thumb post-img"><a href="#"> <img src="public/frontend/images/blog/blog_img_03.jpg" alt="themini"> </a>
-                  <div class="date-time text-center">
-                    <div class="day"> 11</div>
-                    <div class="month">Aug</div>
-                  </div>
-                  <div class="post-image-hover"> </div>
-                  <div class="post-info">
-                    <h6 class="mb_10 text-uppercase"> <a href="single_blog.html">Fashions fade, style is eternal</a> </h6>
-                    <p>Aliquam egestas pellentesque est. Etiam a orci Nulla id enim feugiat ligula ullamcorper scelerisque. Morbi eu luctus nisl.</p>
-                    <div class="view-blog">
-                      <div class="write-comment pull-left"> <a href="single_blog.html"> 0 Comments</a> </div>
-                      <div class="read-more pull-right"> <a href="single_blog.html"> <i class="fa fa-link"></i> read more</a> </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="box-holder">
-                <div class="thumb post-img"><a href="#"> <img src="public/frontend/images/blog/blog_img_04.jpg" alt="themini"> </a>
-                  <div class="date-time text-center">
-                    <div class="day"> 11</div>
-                    <div class="month">Aug</div>
-                  </div>
-                  <div class="post-image-hover"> </div>
-                  <div class="post-info">
-                    <h6 class="mb_10 text-uppercase"> <a href="single_blog.html">Fashions fade, style is eternal</a> </h6>
-                    <p>Aliquam egestas pellentesque est. Etiam a orci Nulla id enim feugiat ligula ullamcorper scelerisque. Morbi eu luctus nisl.</p>
-                    <div class="view-blog">
-                      <div class="write-comment pull-left"> <a href="single_blog.html"> 0 Comments</a> </div>
-                      <div class="read-more pull-right"> <a href="single_blog.html"> <i class="fa fa-link"></i> read more</a> </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+           @endforeach
           </div>
         </div>
         <!-- =====  Blog end ===== -->

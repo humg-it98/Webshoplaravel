@@ -20,11 +20,11 @@
                             {{ csrf_field() }}
                         <div class="form-group">
                             <label for="exampleInputEmail1">Tên danh mục</label>
-                            <input type="text" name="category_product_name" class="form-control" id="exampleInputEmail1" placeholder="Tên danh mục">
+                            <input type="text" name="category_product_name" class="form-control" onkeyup="ChangeToSlug();" id="slug" placeholder="Tên danh mục">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Slug danh mục</label>
-                            <textarea style="resize:none" rows="5" name="category_product_slug" class="form-control" id="ckeditor5" placeholder="Slug danh mục"></textarea>
+                            <textarea style="resize:none" rows="5" name="slug_category_product" class="form-control" id="convert_slug" placeholder="Slug"></textarea>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Từ khóa danh mục</label>

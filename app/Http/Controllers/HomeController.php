@@ -9,6 +9,7 @@ use Session;
 use App\Models\Slider;
 use App\Models\Partner;
 use App\Models\CatePost;
+use App\Models\Post;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 session_start();
@@ -31,8 +32,10 @@ class HomeController extends Controller
         $cate_product = DB::table('tbl_category_product')->where('category_status','0')->orderby('category_id','desc')->get();
         $brand_product = DB::table('tbl_brand_product')->where('brand_status','0')->orderby('brand_id','desc')->get();
         $all_product = DB::table('tbl_product')->where('product_status','0')->orderby('product_id','desc')->limit(10)->get();
+        $all_post = Post::orderBy('post_id','DESC')->where('post_status','0')->take(10)->get();
 
-        return view('pages.home')->with('category',$cate_product)->with('brand',$brand_product)->with('all_product',$all_product)->with('meta_desc',$meta_desc)->with('meta_keywords',$meta_keywords)->with('meta_title',$meta_title)->with('url_canonical',$url_canonical)->with('slider',$slider)->with('partner',$partner)->with('category_post',$category_post);
+        return view('pages.home')->with('category',$cate_product)->with('brand',$brand_product)->with('all_product',$all_product)->with('meta_desc',$meta_desc)->with('meta_keywords',$meta_keywords)->with('meta_title',$meta_title)->with('url_canonical',$url_canonical)->with('slider',$slider)->with('partner',$partner)->with('category_post',$category_post)
+        ->with('all_post',$all_post);
     }
     public function search(Request $request){
           //seo
@@ -44,10 +47,11 @@ class HomeController extends Controller
         $keyword = $request->keywords_submit;
         $cate_product = DB::table('tbl_category_product')->where('category_status','0')->orderby('category_id','desc')->get();
         $brand_product = DB::table('tbl_brand_product')->where('brand_status','0')->orderby('brand_id','desc')->get();
+        $category_post = CatePost::orderBy('cate_post_id','DESC')->where('cate_post_status','1')->get();
         $search_product = DB::table('tbl_product')->where('product_name','like','%'.$keyword.'%')->get();
 
 
-        return view('pages.sanpham.search')->with('category',$cate_product)->with('brand',$brand_product)->with('search_product',$search_product)->with('meta_desc',$meta_desc)->with('meta_keywords',$meta_keywords)->with('meta_title',$meta_title)->with('url_canonical',$url_canonical);
+        return view('pages.sanpham.search')->with('category',$cate_product)->with('brand',$brand_product)->with('search_product',$search_product)->with('meta_desc',$meta_desc)->with('meta_keywords',$meta_keywords)->with('meta_title',$meta_title)->with('url_canonical',$url_canonical)->with('category_post',$category_post);
     }
 
 

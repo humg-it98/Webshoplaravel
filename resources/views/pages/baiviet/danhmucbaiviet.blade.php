@@ -28,7 +28,7 @@
             </ul>
           </div>
         </div>
-        <div class="left_banner left-sidebar-widget mt_30 mb_40"> <a href="#"><img src="images/left1.jpg" alt="Left Banner" class="img-responsive" /></a> </div>
+        <div class="left_banner left-sidebar-widget mt_30 mb_40"> <a href="#"><img src={{asset('public/frontend/images/left1.jpg')}} alt="Left Banner" class="img-responsive" /></a> </div>
         <div class="blog-category left-sidebar-widget mb_50">
           <div class="heading-part mb_20 ">
             <h2 class="main_title">Thương hiệu sản phẩm</h2>
@@ -52,7 +52,7 @@
                 <div class="post-type"><i class="fa fa-music" aria-hidden="true"></i></div>
               </div>
               <div class="post-info mtb_20 ">
-                <h3 class="mb_10"> <a href="single_blog.html">{{$p->post_title}}</a> </h3>
+                <h3 class="mb_10"> <a href="">{{$p->post_title}}</a> </h3>
                 <p>{!!$p->post_desc!!}</p>
                 <div class="details mtb_20">
                   <div class="date pull-left"> <i class="fa fa-calendar" aria-hidden="true"></i>11 Tháng 5 2021 </div>
@@ -65,11 +65,7 @@
         </div>
         <div class="pagination-nav text-center mtb_20">
           <ul>
-            <li><a href="#"><i class="fa fa-angle-left"></i></a></li>
-            <li class="active"><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+            {!!$post_cate->links()!!}
           </ul>
         </div>
       </div>

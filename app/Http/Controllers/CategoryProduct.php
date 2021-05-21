@@ -4,6 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use Excel;
+use App\Models\Partner;
+use App\Models\CatePost;
+use App\Models\CategoryProductModels;
+use App\Exports\ExcelExports;
+use App\Imports\ExcelImports;
 use Session;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
@@ -83,6 +89,8 @@ class CategoryProduct extends Controller
         public function show_category_home(Request $request , $category_id){
             $cate_product = DB::table('tbl_category_product')->where('category_status','0')->orderby('category_id','desc')->get();
             $brand_product = DB::table('tbl_brand_product')->where('brand_status','0')->orderby('brand_id','desc')->get();
+            $category_post = CatePost::orderBy('cate_post_id','DESC')->where('cate_post_status','1')->get();
+            $partner = Partner::orderBy('partner_id','DESC')->where('partner_status','1')->take(10)->get();
             $category_by_id = DB::table('tbl_product')
             ->join('tbl_category_product','tbl_product.category_id','=','tbl_category_product.category_id')
             ->where('tbl_category_product.category_id',$category_id)->get();
@@ -113,6 +121,16 @@ class CategoryProduct extends Controller
             ->with('meta_desc',$meta_desc)
             ->with('meta_keywords',$meta_keywords)
             ->with('meta_title',$meta_title)
-            ->with('url_canonical',$url_canonical);
+            ->with('url_canonical',$url_canonical)
+            ->with('partner',$partner)
+            ->with('category_post',$category_post);
+        }
+        public function export_csv(){
+            return Excel::download(new ExcelExports , 'category_product.xlsx');
+        }
+        public function import_csv(Request $request){
+            $path = $request->file('file')->getRealPath();
+            Excel::import(new ExcelImports, $path);
+            return back();
         }
 }

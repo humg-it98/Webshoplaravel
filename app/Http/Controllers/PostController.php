@@ -69,7 +69,7 @@ class PostController extends Controller
     public function all_post(){
         $this->AuthLogin();
 
-    	$all_post = Post::with('cate_post')->orderBy('cate_post_id')->get();
+    	$all_post = Post::with('cate_post')->orderBy('cate_post_id')->paginate(8);
     	return view('admin.post.list_post')->with(compact('all_post',$all_post));
 
     }
@@ -150,7 +150,7 @@ class PostController extends Controller
             //--seo
         }
 
-        $post_cate = Post::with('cate_post')->where('post_status',0)->where('cate_post_id',$cate_id)->paginate(6);
+        $post_cate = Post::with('cate_post')->where('post_status',0)->where('cate_post_id',$cate_id)->paginate();
 
         return view('pages.baiviet.danhmucbaiviet')->with('category',$cate_product)->with('brand',$brand_product)->with('meta_desc',$meta_desc)->with('meta_keywords',$meta_keywords)->with('meta_title',$meta_title)->with('url_canonical',$url_canonical)->with('slider',$slider)->with('post_cate',$post_cate)->with('category_post',$category_post)->with('share_image',$share_image);
     }

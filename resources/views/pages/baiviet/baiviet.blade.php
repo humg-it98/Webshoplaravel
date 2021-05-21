@@ -75,11 +75,11 @@
             @foreach($post_by_id as $key => $p)
                 <div class="blog-item listing-effect col-md-12 mb_50">
                     <div class="post-format">
-                    <div class="thumb post-img"><a href="images/blog/blog_img_01.jpg" title="Beautiful Lady"> <img src="{{asset('public/uploads/post/'.$p->post_image)}}" alt="{{$p->post_slug}}"></a></div>
+                    <div class="thumb post-img"><a href="" title="Beautiful Lady"> <img src="{{asset('public/uploads/post/'.$p->post_image)}}" alt="{{$p->post_slug}}"></a></div>
                     <div class="post-type"> <i class="fa fa-picture-o" aria-hidden="true"></i> </div>
                     </div>
                     <div class="post-info mtb_20 ">
-                    <h2 class="mb_10"> <a href="single_blog.html">{{$p->post_title}}</a> </h2>
+                    <h2 class="mb_10"> <a href="">{{$p->post_title}}</a> </h2>
                     <p>{!!$p->post_desc!!} </p>
                     </div>
                     <blockquote> {!!$p->post_content!!}</blockquote>
