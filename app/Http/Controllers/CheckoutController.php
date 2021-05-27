@@ -241,8 +241,6 @@ use Mail;
         public function checkout(Request $request){
                 //category post
         $category_post = CatePost::orderBy('cate_post_id','DESC')->get();
-                //seo
-                //slide
         $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','1')->take(4)->get();
 
         $meta_desc = "Đăng nhập thanh toán";
@@ -344,8 +342,8 @@ use Mail;
         }
         public function login_customer(Request $request){
 
-        $email = $request->email_account;
-        $password = md5($request->password_account);
+        $email = $request->user_email;
+        $password = md5($request->user_password);
         $result = DB::table('tbl_customer')->where('customer_email',$email)->where('customer_password',$password)->first();
         if(Session::get('coupon')==true){
         Session::forget('coupon');

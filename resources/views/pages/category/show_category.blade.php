@@ -80,7 +80,7 @@
             </div>
           </div>
         </div>
-        <div class="left_banner left-sidebar-widget mb_50"> <a href="#"><img src="images/left1.jpg" alt="Left Banner" class="img-responsive" /></a> </div>
+        <div class="left_banner left-sidebar-widget mb_50"> <a href="#"><img src="{{asset('public/frontend/images/left1.jpg')}}" alt="Left Banner" class="img-responsive" /></a> </div>
         <div class="left-special left-sidebar-widget mb_50">
           <div class="heading-part mb_10 ">
             <h2 class="main_title">Top Products</h2>

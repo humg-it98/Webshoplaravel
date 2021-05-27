@@ -7,6 +7,7 @@ use DB;
 use Cart;
 use App\Models\City;
 use App\Models\CatePost;
+use App\Models\Partner;
 use Session;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
@@ -56,6 +57,7 @@ class CartController extends Controller
         $cate_product = DB::table('tbl_category_product')->where('category_status','0')->orderby('category_id','desc')->get();
         $brand_product = DB::table('tbl_brand_product')->where('brand_status','0')->orderby('brand_id','desc')->get();
         $category_post = CatePost::orderBy('cate_post_id','DESC')->where('cate_post_status','1')->get();
+        $partner = Partner::orderBy('partner_id','DESC')->where('partner_status','1')->take(10)->get();
 
         $city = City::orderby('matp','ASC')->get();
         $meta_desc = "Giỏ hàng của bạn";
@@ -69,7 +71,8 @@ class CartController extends Controller
         ->with('meta_title',$meta_title)
         ->with('url_canonical',$url_canonical)
         ->with('city',$city)
-        ->with('category_post',$category_post);
+        ->with('category_post',$category_post)
+        ->with('partner',$partner);
 
     }
     public function del_product($session_id){

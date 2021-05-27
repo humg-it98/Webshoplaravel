@@ -125,7 +125,8 @@
                       <li>
                           <a href="{{URL::to('/logout-checkout')}}"><i class="fa fa-lock"></i> Đăng xuất : </a>
 
-                          <img width="15%" src="{{Session::get('customer_picture')}}"> {{Session::get('customer_name')}}
+                          <img width="15%" src="{{Session::get('customer_picture')}}">
+                          {{Session::get('customer_name')}}
 
                       </li>
 
@@ -150,7 +151,7 @@
                   <form action="{{URL::to('/tim-kiem')}}" method="POST">
                   {{ csrf_field() }}
                       <div class="main-search mt_40">
-                          <input id="search-input" name="keywords_submit" value="" placeholder="Tìm kiếm" class="form-control input-lg" autocomplete="off" type="text">
+                          <input id="search-input" name="keywords_submit" value="" placeholder="Bạn cần tìm ..." class="form-control input-lg" autocomplete="off" type="text">
                           <span class="input-group-btn">
                       <button type="submit" class="btn btn-default btn-lg" name="search_item"><i class="fa fa-search"></i></button>
                       </span> </div>
@@ -368,8 +369,8 @@
                 <div class="news-form pull-right">
                   <form onsubmit="return validatemail();" method="post">
                     <div class="form-group required">
-                      <input style="width: 380px" name="email" id="email" placeholder="Enter Your Email" class="form-control input-lg" required="" type="email">
-                      <button type="submit" class="btn btn-default btn-lg" style="width: 175px">Subscribe</button>
+                      <input name="email" id="email" placeholder="Enter Your Email" class="form-control input-lg" required="" type="email">
+                      <button type="submit" class="btn btn-default btn-lg" style="width:130px; border-radius:10px">Subscribe</button>
                     </div>
                   </form>
                 </div>

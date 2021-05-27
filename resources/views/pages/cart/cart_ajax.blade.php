@@ -119,7 +119,9 @@
                                         <input type="text" class="form-control" id="input-coupon" placeholder="Nhập mã giảm giá" value="" name="coupon">
                                         <span class="input-group-btn">
                                          <input type="submit" class="btn btn-success"style="border-radius:20px " data-loading-text="Loading..." id="button-coupon" value="Apply Coupon">
-                                         <input type="submit" class="btn btn-danger" style="border-radius:20px " data-loading-text="Loading..." id="button-coupon" value="Delete Coupon">
+                                         @if(Session::get('coupon'))
+                                            <a class="btn btn-default check_out" style="border-radius:20px " href="{{url('/unset-coupon')}}">Xóa mã khuyến mãi</a>
+                                         @endif
                                         </span>
                                     </div>
                                 </div>
@@ -132,7 +134,7 @@
                             <tbody>
                               <tr>
                                 <td class="text-right"><strong>Tạm tính:</strong></td>
-                                <td class="text-right">{{number_format($total).'VNĐ'}}</td>
+                                <td class="text-right">{{number_format($total).' VNĐ'}}</td>
                               </tr>
 
                               <tr>
@@ -171,9 +173,12 @@
                               <tr>
                                 <td class="text-right"><strong>Tổng tiền:</strong></td>
                                 @if(Session::get('coupon'))
-                                <td class="text-right">{{number_format($total_after_coupon,0,',','.').'VNĐ'}}</td>
+                                <td class="text-right">{{number_format($total_after_coupon).' VNĐ'}}</td>
                                 @else
-                                <td class="text-right">{{number_format($total,0,',','.').'VNĐ'}}</td>
+                                @php
+                                    $total_after_coupon = ($total);
+                                @endphp
+                                <td class="text-right">{{number_format($total_after_coupon).'VNĐ'}}</td>
                                 @endif
                               </tr>
                             </tbody>
@@ -187,7 +192,7 @@
                         <input class="btn pull-right mt_30" type="submit" value="Thanh toán" />
                       </form>
                       @else
-                      <form action="{{URL::to('/login-checkout')}}">
+                      <form action="{{URL::to('/dang-nhap')}}">
                         <input class="btn pull-right mt_30" type="submit" value="Thanh toán" />
                       </form>
                       @endif
@@ -207,7 +212,9 @@
                 <div class="row">
                 <div class="col-sm-12">
                     <div class="brand owl-carousel ptb_20">
-                    <div class="item text-center"> <a href="#"><img src={{asset("public/frontend/images/brand/brand1.png")}} alt="Disney" class="img-responsive" /></a> </div>
+                        @foreach($partner as $key => $par)
+                        <div class="item text-center"> <a href="#"><img src={{URL::to('public/uploads/partner/'.$par->partner_image)}}  alt="{{$par->name}}" class="img-responsive" /></a> </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

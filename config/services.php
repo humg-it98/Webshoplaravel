@@ -31,8 +31,8 @@ return [
     ],
 
     'facebook' => [
-        'client_id' => '909289186519316',  //client face của bạn
-        'client_secret' => 'b57d5b44d4261d791ba09aa700c11b37',  //client app service face của bạn
+        'client_id' => '330261455277514',  //client face của bạn
+        'client_secret' => '28f05719fb0a5b04b6b4b4b1bd8304a7',  //client app service face của bạn
         'redirect' => 'http://localhost:8080/webshoplaravel/admin/callback' //callback trả về
     ],
 

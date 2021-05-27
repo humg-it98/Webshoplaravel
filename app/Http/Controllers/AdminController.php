@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Social; //sử dụng model Social
-use Socialite; //sử dụng Socialite
-use App\Login; //sử dụng model Login
+use App\Models\Social; //sử dụng model Social
+use App\modals\Login; //sử dụng model Login
 use Illuminate\Http\Request;
 use App\Rules\Captcha;
 use Validator;
+use Socialite;      //sử dụng Socialite
 use DB;
 use Session;
 use App\Http\Requests;
@@ -35,9 +35,7 @@ class AdminController extends Controller
     public function dashboard(Request $request){
         $admin_email = $request->admin_email;
         $admin_password = md5($request->admin_password);
-
         $result = DB::table('tbl_admin')->where('admin_email',$admin_email)->where('admin_password',$admin_password)->first();
-
 
         if($result){
             Session::put('admin_name',$result->admin_name);
@@ -68,10 +66,10 @@ class AdminController extends Controller
             //login in vao trang quan tri
             $account_name = Login::where('admin_id',$account->user)->first();
             Session::put('admin_name',$account_name->admin_name);
-            return redirect('/admin-dashboard')->with('message', 'Đăng nhập Admin thành công');
+            return redirect('/dashboard')->with('message', 'Đăng nhập Admin thành công');
         }else{
 
-            $hieu = new Social([
+            $ngoc = new Social([
                 'provider_user_id' => $provider->getId(),
                 'provider' => 'facebook'
             ]);
@@ -87,14 +85,14 @@ class AdminController extends Controller
 
                 ]);
             }
-            $hieu->login()->associate($orang);
-            $hieu->save();
+            $ngoc->login()->associate($orang);
+            $ngoc->save();
 
             $account_name = Login::where('admin_id',$account->user)->first();
 
-            Session::put('admin_login',$account_name->admin_name);
-             Session::put('admin_id',$account_name->admin_id);
-            return redirect('/admin-dashboard')->with('message', 'Đăng nhập Admin thành công');
+            Session::put('admin_name',$account_name->admin_name);
+            Session::put('admin_id',$account_name->admin_id);
+            return redirect('/dashboard')->with('message', 'Đăng nhập Admin thành công');
         }
     }
     public function customer_register(Request $request){

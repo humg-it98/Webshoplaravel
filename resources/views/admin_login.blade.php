@@ -65,17 +65,12 @@
                     <div class="input-form">
                         <p>Bạn Chưa Có Tài Khoản? <a href="registration.html">Đăng Ký</a></p>
                     </div>
-                    <form class="input-form" action="?" method="POST">
-                        <div class="g-recaptcha" data-sitekey="6Le_zMsaAAAAABRNTq18eyvhv9NanYlQkwg4uOVA"></div>
-                        <br/>
-                        <input type="submit" value="Submit">
-                    </form>
                 </form>
                 <h3>Đăng Nhập Bằng Mạng Xã Hội</h3>
                 <ul class="icon-dang-nhap">
-                    <li><i class="fa fa-facebook" aria-hidden="true"></i></li>
-                    <li><i class="fa fa-google" aria-hidden="true"></i></li>
-                    <li><i class="fa fa-twitter" aria-hidden="true"></i></li>
+                    <li><a href="{{url('/login-facebook')}}"><i class="fa fa-facebook" aria-hidden="true"></i></a><li>
+                    <li><a href="{{url('/login-gmail')}}"><i class="fa fa-google" aria-hidden="true"></i></a><li>
+                    <li><a href="{{url('/login-gmail')}}"><i class="fa fa-twitter" aria-hidden="true"></i></a><li>
                 </ul>
             </div>
         </div>
@@ -87,7 +82,7 @@
     </script>
     <script type="text/javascript">
         var onloadCallback = function() {
-          alert("grecaptcha is ready!");
+          alert("G-Captra dang lỗi!");
         };
       </script>
 </body>

@@ -21,8 +21,12 @@ Route::post('/tim-kiem','HomeController@search');
 Route::get('/admin','AdminController@index');
 Route::get('/dashboard','AdminController@show_dashboard');
 Route::post('/admin-dashboard','AdminController@dashboard');
-
 Route::get('/logout','AdminController@logout');
+
+//Dang nhap fb-gmail
+Route::get('/login-facebook','AdminController@login_facebook');
+Route::get('/admin/callback','AdminController@callback_facebook');
+
 
 //Category Product
 Route::get('/add-category-product','CategoryProduct@add_category_product');
@@ -125,9 +129,9 @@ Route::get('/active-partner/{partner_id}','PartnerController@active_partner');
 Route::get('/delivery','DeliveryController@delivery');
 
 //Check-out
-Route::get('/login-checkout','CheckoutController@login_checkout');
-// Route::get('/dang-nhap','CheckoutController@login_checkout');
-Route::post('/logout-checkout','CheckoutController@logout_checkout');
+// Route::get('/login-checkout','CheckoutController@login_checkout');
+Route::get('/dang-nhap','CheckoutController@login_checkout');
+Route::get('/logout-checkout','CheckoutController@logout_checkout');
 Route::post('/add-customer','CheckoutController@add_customer');
 Route::get('/checkout','CheckoutController@checkout');
 Route::post('/save-checkout-customer','CheckoutController@save_checkout_customer');

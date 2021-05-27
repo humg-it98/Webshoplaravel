@@ -49,9 +49,10 @@ class HomeController extends Controller
         $brand_product = DB::table('tbl_brand_product')->where('brand_status','0')->orderby('brand_id','desc')->get();
         $category_post = CatePost::orderBy('cate_post_id','DESC')->where('cate_post_status','1')->get();
         $search_product = DB::table('tbl_product')->where('product_name','like','%'.$keyword.'%')->get();
+        $partner = Partner::orderBy('partner_id','DESC')->where('partner_status','1')->take(10)->get();
 
 
-        return view('pages.sanpham.search')->with('category',$cate_product)->with('brand',$brand_product)->with('search_product',$search_product)->with('meta_desc',$meta_desc)->with('meta_keywords',$meta_keywords)->with('meta_title',$meta_title)->with('url_canonical',$url_canonical)->with('category_post',$category_post);
+        return view('pages.sanpham.search')->with('category',$cate_product)->with('brand',$brand_product)->with('search_product',$search_product)->with('meta_desc',$meta_desc)->with('meta_keywords',$meta_keywords)->with('meta_title',$meta_title)->with('url_canonical',$url_canonical)->with('category_post',$category_post)->with('partner',$partner);
     }
 
 
