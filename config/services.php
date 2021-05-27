@@ -33,8 +33,15 @@ return [
     'facebook' => [
         'client_id' => '330261455277514',  //client face của bạn
         'client_secret' => '28f05719fb0a5b04b6b4b4b1bd8304a7',  //client app service face của bạn
-        'redirect' => 'http://localhost:8080/webshoplaravel/admin/callback' //callback trả về
+        'redirect' => 'https://localhost:8080/webshoplaravel/admin/callback' //callback trả về
     ],
+
+    'google' => [
+        'client_id' => '292225187513-nmdh5ucuulcthnqee9jrnq0649kr3tk3.apps.googleusercontent.com',
+        'client_secret' => 'CDvWjrbrEiBgtFQIJqshWUK6',
+        'redirect' => 'http://localhost:8080/webshoplaravel/admin/callback-gg'
+    ],
+
 
 
 ];

@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,6 +12,6 @@ class Login extends Model
     ];
     protected $primaryKey = 'admin_id';
  	protected $table = 'tbl_admin';
- 	
- 	
+
+
 }

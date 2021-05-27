@@ -1,90 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang quản trị web dành cho Admin</title>
-    <link href="{{asset('public/backend/css/style_login.css')}}" rel='stylesheet' type='text/css' >
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<title>Trang quản lý Admin Web</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Visitors Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- bootstrap-css -->
+<link rel="stylesheet" href="css/bootstrap.min.css" >
+<!-- //bootstrap-css -->
+<!-- Custom CSS -->
+<link href="{{asset('public/backend/css/style.css')}}" rel='stylesheet' type='text/css' />
+<link href="{{asset('public/backend/css/style-responsive.css')}}" rel="stylesheet"/>
+<!-- font CSS -->
+<link href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+<!-- font-awesome icons -->
+<link rel="stylesheet" href="{{asset('public/backend/css/font.css')}}" type="text/css"/>
+<link href="{{asset('public/backend/css/font-awesome.css')}}" rel="stylesheet">
+<!-- //font-awesome icons -->
+<script src="{{asset('public/backend/js/jquery2.0.3.min.js')}}"></script>
 </head>
-
 <body>
-    <section>
-        <!--Bắt Đầu Phần Hình Ảnh-->
-        <div class="img-bg">
-            <img src="https://tophinhnen.com/wp-content/uploads/2018/08/anh-la-co-viet-nam-dep-5.jpg"
-                alt="Hình Ảnh Minh Họa">
-        </div>
-        <!--Kết Thúc Phần Hình Ảnh-->
-        <!--Bắt Đầu Phần Nội Dung-->
-        <div class="noi-dung">
-            <div class="form">
-                <h2>Trang Đăng Nhập</h2>
-                <br>
-                    <?php
-                    $message = Session::get('message');
-                    if($message){
-                        echo '<span class="text-alert">'.$message.'</span>';
-                        Session::put('message',null);
-                    }
-                    ?>
-            <form action="{{URL::to('/admin-dashboard')}}" method="post">
-                  {{ csrf_field() }}
-                    @foreach($errors->all() as $val)
-                    <ul>
-                        <li>{{$val}}</li>
-                    </ul>
-                    @endforeach
-                    <div class="input-form">
-                        <span>Tên Người Dùng</span>
-                        <input type="text" name="admin_email" placeholder="Điền email" >
-                    </div>
-                    <div class="input-form">
-                        <span>Mật Khẩu</span>
-                        <input type="password" name="admin_password" placeholder="Điền mat khau" >
-                    </div>
-                    <div class="nho-dang-nhap">
-                        <label><input type="checkbox" name=""> Nhớ Đăng Nhập</label>
-                    </div>
-                    <div class="input-form">
-                        <input type="submit" value="Đăng nhập" name="Đăng nhập">
-                    </div>
-                    <div>
-                        <div class="g-recaptcha" data-sitekey="{{env('6Le_zMsaAAAAABRNTq18eyvhv9NanYlQkwg4uOVA"')}}"></div>
-                            <br/>
-                            @if($errors->has('g-recaptcha-response'))
-                            <span class="invalid-feedback" style="display:block">
-                                <strong>{{$errors->first('g-recaptcha-response')}}</strong>
-                            </span>
-                            @endif
-                    </div>
-                    <div class="input-form">
-                        <p>Bạn Chưa Có Tài Khoản? <a href="registration.html">Đăng Ký</a></p>
-                    </div>
-                </form>
-                <h3>Đăng Nhập Bằng Mạng Xã Hội</h3>
-                <ul class="icon-dang-nhap">
-                    <li><a href="{{url('/login-facebook')}}"><i class="fa fa-facebook" aria-hidden="true"></i></a><li>
-                    <li><a href="{{url('/login-gmail')}}"><i class="fa fa-google" aria-hidden="true"></i></a><li>
-                    <li><a href="{{url('/login-gmail')}}"><i class="fa fa-twitter" aria-hidden="true"></i></a><li>
-                </ul>
-            </div>
-        </div>
-        <!--Kết Thúc Phần Nội Dung-->
-    </section>
+<div class="log-w3">
+<div class="w3layouts-main">
+	<h2>Đăng nhập</h2>
+	<?php
+	$message = Session::get('message');
+	if($message){
+		echo '<span class="text-alert">'.$message.'</span>';
+		Session::put('message',null);
+	}
+	?>
+		<form action="{{URL::to('/admin-dashboard')}}" method="post">
+			{{ csrf_field() }}
+			@foreach($errors->all() as $val)
+			<ul>
+				<li>{{$val}}</li>
+			</ul>
+			@endforeach
+			<input type="text"  class="ggg" name="admin_email" placeholder="Điền email" >
+			<input type="password" class="ggg" name="admin_password" placeholder="Điền password" >
 
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer>
-    </script>
-    <script type="text/javascript">
-        var onloadCallback = function() {
-          alert("G-Captra dang lỗi!");
-        };
-      </script>
+			<span><input type="checkbox" />Nhớ đăng nhập</span>
+			<h6><a href="#">Quên mật khẩu</a></h6>
+				<div class="clearfix"></div>
+				<input type="submit" value="Đăng nhập" name="login">
+
+			<div class="g-recaptcha" data-sitekey="{{env('6Le_zMsaAAAAABRNTq18eyvhv9NanYlQkwg4uOVA')}}"></div>
+			<br/>
+			@if($errors->has('g-recaptcha-response'))
+			<span class="invalid-feedback" style="display:block">
+				<strong>{{$errors->first('g-recaptcha-response')}}</strong>
+			</span>
+			@endif
+
+		</form>
+		<a href="{{url('/login-facebook')}}">Login Facebook</a> |
+		<a href="{{url('/login-google')}}">Login Google</a> |
+		<a href="{{url('/register-auth')}}">Đăng ký Auth</a> |
+		<a href="{{url('/login-auth')}}">Đăng nhập Auth</a>
+		{{-- <p>Don't Have an Account ?<a href="registration.html">Create an account</a></p> --}}
+</div>
+</div>
+<script src="{{asset('public/backend/js/bootstrap.js')}}"></script>
+<script src="{{asset('public/backend/js/jquery.dcjqaccordion.2.7.js')}}"></script>
+<script src="{{asset('public/backend/js/scripts.js')}}"></script>
+<script src="{{asset('public/backend/js/jquery.slimscroll.js')}}"></script>
+<script src="{{asset('public/backend/js/jquery.nicescroll.js')}}"></script>
+<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
+<script src="{{asset('public/backend/js/jquery.scrollTo.js')}}"></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </body>
-
 </html>

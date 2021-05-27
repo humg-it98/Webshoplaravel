@@ -178,7 +178,7 @@
                                 @php
                                     $total_after_coupon = ($total);
                                 @endphp
-                                <td class="text-right">{{number_format($total_after_coupon).'VNĐ'}}</td>
+                                <td class="text-right">{{number_format($total).'VNĐ'}}</td>
                                 @endif
                               </tr>
                             </tbody>

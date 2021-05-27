@@ -188,7 +188,6 @@ class CartController extends Controller
     public function unset_coupon(){
 		$coupon = Session::get('coupon');
         if($coupon==true){
-
             Session::forget('coupon');
             return redirect()->back()->with('message','Xóa mã khuyến mãi thành công');
         }

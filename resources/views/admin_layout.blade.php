@@ -241,6 +241,45 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     });
 </script>
 {{-- notes --}}
+<script type="text/javascript">
+
+    function ChangeToSlug()
+        {
+            var slug;
+
+            //Lấy text từ thẻ input title
+            slug = document.getElementById("slug").value;
+            slug = slug.toLowerCase();
+            //Đổi ký tự có dấu thành không dấu
+                slug = slug.replace(/á|à|ả|ạ|ã|ă|ắ|ằ|ẳ|ẵ|ặ|â|ấ|ầ|ẩ|ẫ|ậ/gi, 'a');
+                slug = slug.replace(/é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ/gi, 'e');
+                slug = slug.replace(/i|í|ì|ỉ|ĩ|ị/gi, 'i');
+                slug = slug.replace(/ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ/gi, 'o');
+                slug = slug.replace(/ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự/gi, 'u');
+                slug = slug.replace(/ý|ỳ|ỷ|ỹ|ỵ/gi, 'y');
+                slug = slug.replace(/đ/gi, 'd');
+                //Xóa các ký tự đặt biệt
+                slug = slug.replace(/\`|\~|\!|\@|\#|\||\$|\%|\^|\&|\*|\(|\)|\+|\=|\,|\.|\/|\?|\>|\<|\'|\"|\:|\;|_/gi, '');
+                //Đổi khoảng trắng thành ký tự gạch ngang
+                slug = slug.replace(/ /gi, "-");
+                //Đổi nhiều ký tự gạch ngang liên tiếp thành 1 ký tự gạch ngang
+                //Phòng trường hợp người nhập vào quá nhiều ký tự trắng
+                slug = slug.replace(/\-\-\-\-\-/gi, '-');
+                slug = slug.replace(/\-\-\-\-/gi, '-');
+                slug = slug.replace(/\-\-\-/gi, '-');
+                slug = slug.replace(/\-\-/gi, '-');
+                //Xóa các ký tự gạch ngang ở đầu và cuối
+                slug = '@' + slug + '@';
+                slug = slug.replace(/\@\-|\-\@|\@/gi, '');
+                //In slug ra textbox có id “slug”
+            document.getElementById('convert_slug').value = slug;
+        }
+
+
+
+
+</script>
+{{-- ==== --}}
 <script>
 	$(document).ready(function() {
 		//BOX BUTTON SHOW AND CLOSE
@@ -297,13 +336,80 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	});
 </script>
 <script type="text/javascript">
-    $(document).ready(function)(){
+        $(document).ready(function(){
+        fetch_delivery();
+        function fetch_delivery(){
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+                url : '{{url('/select-feeship')}}',
+                method: 'POST',
+                data:{ _token:_token},
+                success:function(data){
+                    $('#load_delivery').html(data);
+                }
+            });
+        }
+        $(document).on('blur','.fee_feeship_edit',function(){
+            var feeship_id = $(this).data('feeship_id');
+            var fee_value = $(this).text();
+            var _token = $('input[name="_token"]').val();
+            // alert(feeship_id);
+            // alert(fee_value);
+            $.ajax({
+                url : '{{url('/update-delivery')}}',
+                method: 'POST',
+                data:{feeship_id:feeship_id, fee_value:fee_value, _token:_token},
+                success:function(data){
+                fetch_delivery();
+                }
+            });
+        });
+
         $('.add_delivery').click(function(){
-            alert('ok');
-        })
+            var city = $('.city').val();
+            var province = $('.province').val();
+            var wards = $('.wards').val();
+            var fee_ship = $('.fee_ship').val();
+            var _token = $('input[name="_token"]').val();
+            // alert(city);
+            // alert(province);
+            // alert(wards);
+            // alert(fee_ship);
+            $.ajax({
+                url : '{{url('/insert-delivery')}}',
+                method: 'POST',
+                data:{city:city, province:province, wards:wards, fee_ship:fee_ship, _token:_token},
+                success:function(data){
+                    alert('Thêm phí vận chuyển thành công');
+                    fetch_delivery();
+                }
+            });
+        });
+        $('.choose').on('change',function(){
+            var action = $(this).attr('id');
+            var matp = $(this).val();
+            var _token = $('input[name="_token"]').val();
+            var result = '';
+            // alert(action);
+            // alert(matp);
+            // alert(_token);
+
+            if(action=='city'){
+                result = 'province';
+            }else{
+                result = 'wards';
+            }
+            $.ajax({
+                url : '{{url('/select-delivery')}}',
+                method: 'POST',
+                data:{action:action,matp:matp,_token:_token},
+                success:function(data){
+                   $('#'+result).html(data);
+                }
+            });
+        });
     })
 </script>
-
 
 
 </body>

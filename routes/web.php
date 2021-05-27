@@ -26,7 +26,8 @@ Route::get('/logout','AdminController@logout');
 //Dang nhap fb-gmail
 Route::get('/login-facebook','AdminController@login_facebook');
 Route::get('/admin/callback','AdminController@callback_facebook');
-
+Route::get('/login-google','AdminController@login_google');
+Route::get('/admin/callback-gg','AdminController@callback_google');
 
 //Category Product
 Route::get('/add-category-product','CategoryProduct@add_category_product');
@@ -94,6 +95,7 @@ Route::post('/save-cart','CartController@save_cart');
 Route::get('/show-cart','CartController@show_cart');
 Route::get('/delete-to-cart/{rowId}','CartController@delete_to_cart');
 Route::get('/update-cart-quantity','CartController@update_cart');
+Route::post('/update-cart','CartController@update_cart_fee');
 //Cart dùng Ajax
 Route::post('/add-cart-ajax','CartController@add_cart_ajax');
 Route::get('/gio-hang','CartController@gio_hang');
@@ -127,6 +129,11 @@ Route::get('/active-partner/{partner_id}','PartnerController@active_partner');
 
 //Delivery
 Route::get('/delivery','DeliveryController@delivery');
+Route::post('/select-delivery','DeliveryController@select_delivery');
+Route::post('/insert-delivery','DeliveryController@insert_delivery');
+Route::post('/select-feeship','DeliveryController@select_feeship');
+Route::post('/update-delivery','DeliveryController@update_delivery');
+
 
 //Check-out
 // Route::get('/login-checkout','CheckoutController@login_checkout');
@@ -138,18 +145,23 @@ Route::post('/save-checkout-customer','CheckoutController@save_checkout_customer
 Route::get('/payment','CheckoutController@payment');
 Route::post('/login-customer','CheckoutController@login_customer');
 Route::post('/order-place','CheckoutController@order_place');
+Route::post('/select-delivery-home','CheckoutController@select_delivery_home');
+Route::post('/calculate-fee','CheckoutController@calculate_fee');
+Route::get('/del-fee','CheckoutController@del_fee');
+Route::post('/confirm-order','CheckoutController@confirm_order');
+
+
 
 // Order (Đơn hàng trang Admin)
-Route::get('/manage-order','CheckoutController@manage_order');
-Route::get('/view-order/{order_id}','CheckoutController@view_order');
+Route::get('/manage-order','OrderController@manage_order');
+Route::get('/view-order/{order_code}','OrderController@view_order');
+Route::get('/print-order/{checkout_code}','OrderController@print_order');
+
 
 
 //sent-mail
 Route::get('/send-mail','HomeController@send_mail');
 
-//Login facebook
-Route::get('/login-facebook','AdminController@login_facebook');
-Route::get('/admin/callback','AdminController@callback_facebook');
 
 
 

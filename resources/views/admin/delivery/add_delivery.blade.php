@@ -14,7 +14,6 @@
                             }
                             ?>
                         <div class="panel-body">
-
                             <div class="position-center">
                                 <form>
                                     @csrf
@@ -25,31 +24,30 @@
                                         @foreach($city as $key => $ci)
                                             <option value="{{$ci->matp}}">{{$ci->name_city}}</option>
                                         @endforeach
-
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Chọn quận huyện</label>
                                       <select name="province" id="province" class="form-control input-sm m-bot15 province choose">
-                                            <option value="">--Chọn quận huyện--</option>
+                                            <option value="">---Chọn quận huyện---</option>
                                     </select>
                                 </div>
                                   <div class="form-group">
                                     <label for="exampleInputPassword1">Chọn xã phường</label>
                                       <select name="wards" id="wards" class="form-control input-sm m-bot15 wards">
-                                            <option value="">--Chọn xã phường--</option>
+                                            <option value="">---Chọn xã phường---</option>
 
                                     </select>
                                 </div>
                                  <div class="form-group">
                                     <label for="exampleInputEmail1">Phí vận chuyển</label>
-                                    <input type="text" name="fee_ship" class="form-control fee_ship" id="exampleInputEmail1" placeholder="Tên danh mục">
+                                    <input type="text" name="fee_ship" class="form-control fee_ship" id="exampleInputEmail1" placeholder="Phí vận chuyển">
                                 </div>
 
                                 <button type="button" name="add_delivery" class="btn btn-info add_delivery">Thêm phí vận chuyển</button>
                                 </form>
                             </div>
-
+                            <br>
                             <div id="load_delivery">
 
                             </div>

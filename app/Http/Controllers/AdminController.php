@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Social; //sử dụng model Social
-use App\modals\Login; //sử dụng model Login
+use App\Modals\Login; //sử dụng model Login
 use Illuminate\Http\Request;
 use App\Rules\Captcha;
 use Validator;
@@ -118,6 +118,56 @@ class AdminController extends Controller
 
         return redirect('/dang-nhap')->with('message', 'Đăng ký tài khoản thành công,làm ơn đăng nhập');
     }
+
+    public function login_google(){
+        return Socialite::driver('google')->redirect();
+    }
+    public function callback_google(){
+            $users = Socialite::driver('google')->stateless()->user();
+            // return $users->id;
+            $authUser = $this->findOrCreateUser($users,'google');
+            $account_name = Login::where('admin_id',$authUser->user)->first();
+            Session::put('admin_login',$account_name->admin_name);
+            Session::put('admin_id',$account_name->admin_id);
+            return redirect('/dashboard')->with('message', 'Đăng nhập Admin thành công');
+
+
+        }
+        public function findOrCreateUser($users,$provider){
+            $authUser = Social::where('provider_user_id', $users->id)->first();
+            if($authUser){
+
+                return $authUser;
+            }
+
+            $hieu = new Social([
+                'provider_user_id' => $users->id,
+                'provider' => strtoupper($provider)
+            ]);
+
+            $orang = Login::where('admin_email',$users->email)->first();
+
+                if(!$orang){
+                    $orang = Login::create([
+                        'admin_name' => $users->name,
+                        'admin_email' => $users->email,
+                        'admin_password' => '',
+
+                        'admin_phone' => '',
+                        'admin_status' => 1
+                    ]);
+                }
+            $hieu->login()->associate($orang);
+            $hieu->save();
+
+            $account_name = Login::where('admin_id',$authUser->user)->first();
+            Session::put('admin_login',$account_name->admin_name);
+            Session::put('admin_id',$account_name->admin_id);
+            return redirect('/dashboard')->with('message', 'Đăng nhập Admin thành công');
+
+
+        }
+
 
 
 }
