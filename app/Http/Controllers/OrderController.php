@@ -23,6 +23,7 @@ use App\Models\Order;
 use App\Models\Coupon;
 use App\Models\Partner;
 use App\Models\OrderDetails;
+use App\Models\Statistic;
 use Mail;
 use PDF;
 
@@ -217,7 +218,7 @@ class OrderController extends Controller
 		}
 
 		$output.= '<tr>
-		<td class="text-right" colspan="6">
+		<td width="500px" colspan="6">
 		<p>Tổng giảm: '.$coupon_echo.'</p>
 		<p>Phí ship: '.number_format($product->product_feeship,0,',','.').'đ'.'</p>
 		<p>Thanh toán : '.number_format($total_coupon + $product->product_feeship,0,',','.').'đ'.'</p>
@@ -250,4 +251,53 @@ class OrderController extends Controller
 		return $output;
 
 	}
+    public function order_code(Request $request ,$order_code){
+		$order = Order::where('order_code',$order_code)->first();
+		$order->delete();
+		Session::put('message','Xóa đơn hàng thành công');
+		return redirect()->back();
+	}
+    public function update_order_qty(Request $request){
+        $data = $request->all();
+		$order = Order::find($data['order_id']);
+		$order->order_status = $data['order_status'];
+		$order->save();
+        if($order->order_status==2){
+			//them
+			$total_order = 0;
+			$sales = 0;
+			$profit = 0;
+			$quantity = 0;
+
+			foreach($data['order_product_id'] as $key => $product_id){
+
+				$product = Product::find($product_id);
+				$product_quantity = $product->product_quantity;
+				$product_sold = $product->product_sold;
+				//them
+				$product_price = $product->product_price;
+				$product_cost = $product->price_cost;
+				$now = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
+
+				foreach($data['quantity'] as $key2 => $qty){
+
+					if($key==$key2){
+						$pro_remain = $product_quantity - $qty;
+						$product->product_quantity = $pro_remain;
+						$product->product_sold = $product_sold + $qty;
+						$product->save();
+						//update doanh thu
+					}
+
+				}
+			}
+        }
+	}
+    public function update_qty(Request $request){
+		$data = $request->all();
+		$order_details = OrderDetails::where('product_id',$data['order_product_id'])->where('order_code',$data['order_code'])->first();
+		$order_details->product_sales_quantity = $data['order_qty'];
+		$order_details->save();
+	}
+
 }

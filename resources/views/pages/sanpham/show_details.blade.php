@@ -384,8 +384,8 @@
                                     <label>Mã ID sản phẩm:</label>
                                     <span> {{$value->product_id}}</span></li>
                                 <li>
-                                    <label>Tình trạng:</label>
-                                    <span> Còn hàng</span></li>
+                                    <label>Tình trạng kho còn:</label>
+                                    <span> {{$value->product_quantity}} sản phẩm</span></li>
                                 </ul>
                                 <hr>
                                 <p class="product-desc mtb_30"><b>Mô tả sản phẩm:</b> {!!$value->product_desc!!} </p>

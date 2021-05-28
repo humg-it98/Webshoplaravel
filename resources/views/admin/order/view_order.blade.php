@@ -226,6 +226,7 @@
 
                 <option disabled id="{{$or->order_id}}" value="1">Chưa xử lý</option>
                 <option id="{{$or->order_id}}" selected value="2">Đã xử lý-Đã giao hàng</option>
+                
 
               </select>
             </form>
