@@ -29,7 +29,7 @@ class HomeController extends Controller
         $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','1')->take(4)->get();
         $category_post = CatePost::orderBy('cate_post_id','DESC')->where('cate_post_status','1')->get();
         $partner = Partner::orderBy('partner_id','DESC')->where('partner_status','1')->take(10)->get();
-        $cate_product = DB::table('tbl_category_product')->where('category_status','0')->orderby('category_id','desc')->get();
+        $cate_product = DB::table('tbl_category_product')->where('category_status','0')->orderby('category_id','desc')->take(3)->get();
         $brand_product = DB::table('tbl_brand_product')->where('brand_status','0')->orderby('brand_id','desc')->get();
         $all_product = DB::table('tbl_product')->where('product_status','0')->orderby('product_id','desc')->limit(10)->get();
         $all_post = Post::orderBy('post_id','DESC')->where('post_status','0')->take(10)->get();

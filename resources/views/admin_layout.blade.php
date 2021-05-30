@@ -59,7 +59,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <img alt="" src={{asset("public/backend/images/2.png")}}>
                 <span class="username">
                     <?php
-                    $name = Session::get('admin_name');
+                    $name = Auth::user()->admin_name;
                     if($name){
                         echo $name;
                     }
@@ -70,7 +70,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <ul class="dropdown-menu extended logout">
                 <li><a href="#"><i class=" fa fa-suitcase"></i>Thông tin </a></li>
                 <li><a href="#"><i class="fa fa-cog"></i>Cài đặt</a></li>
-                <li><a href="{{URL::to('/logout')}}"><i class="fa fa-key"></i>Đăng xuất</a></li>
+                <li><a href="{{URL::to('/logout-auth')}}"><i class="fa fa-key"></i>Đăng xuất</a></li>
             </ul>
         </li>
         <!-- user login dropdown end -->
@@ -150,7 +150,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </a>
                     <ul class="sub">
 						<li><a href="{{URL::to('/manage-order')}}">Quản lý đơn hàng</a></li>
-						<li><a href="{{URL::to('/all-category-product')}}">Liệt kê đơn hàng</a></li>
                     </ul>
                 </li>
                 <li class="sub-menu">
@@ -192,6 +191,34 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <li><a href="{{URL::to('/add-category-post')}}">Thêm danh mục bài viết</a></li>
                     <li><a href="{{URL::to('/all-category-post')}}">Liệt kê danh mục bài viết</a></li>
                 </ul>
+
+                @impersonate
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-book"></i>
+                        <span>Stop chuyển quyền</span>
+                    </a>
+                    <ul class="sub">
+                         <li><a href="{{URL::to('/impersonate-destroy')}}">Stop chuyển quyền</a></li>
+                    </ul>
+                </li>
+                @endimpersonate
+
+
+                @hasrole(['admin','author'])
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-book"></i>
+                        <span>Users</span>
+                    </a>
+                    <ul class="sub">
+                         <li><a href="{{URL::to('/add-users')}}">Thêm user</a></li>
+                        <li><a href="{{URL::to('/users')}}">Liệt kê user</a></li>
+
+                    </ul>
+                </li>
+                @endhasrole
+
             </li>
         </ul>
         <!-- sidebar menu end-->

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use Auth;
 use Session;
 use App\Models\CatePost;
 use App\Models\Partner;
@@ -15,7 +16,7 @@ session_start();
 class ProductController extends Controller
 {
         public function AuthLogin(){
-            $admin_id = Session::get('admin_id');
+            $admin_id = Auth::id();
             if($admin_id){
                 return Redirect::to('dashboard');
             }else{

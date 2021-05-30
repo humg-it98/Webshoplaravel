@@ -10,6 +10,7 @@ use Validator;
 use Socialite;      //sử dụng Socialite
 use DB;
 use Session;
+use Auth;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 session_start();
@@ -17,7 +18,7 @@ session_start();
 class AdminController extends Controller
 {
     public function AuthLogin(){
-        $admin_id = Session::get('admin_id');
+        $admin_id = Auth::id();
         if($admin_id){
             return Redirect::to('dashboard');
         }else{

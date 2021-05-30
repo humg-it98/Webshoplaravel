@@ -217,45 +217,26 @@
             </div>
             </div>
             <nav class="navbar">
-              <p>menu</p>
               <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".js-navbar-collapse"> <span class="i-bar"><i class="fa fa-bars"></i></span></button>
               <div class="collapse navbar-collapse js-navbar-collapse">
                 <ul id="menu" class="nav navbar-nav">
                   <li> <a href="{{URL::to('/')}}">Trang chủ</a></li>
-                  <li class="dropdown mega-dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">Collection </a>
+                  <li class="dropdown mega-dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">Danh mục </a>
                     <ul class="dropdown-menu mega-dropdown-menu row">
-                      <li class="col-md-3">
-                        <ul>
-                          <li class="dropdown-header">Women's</li>
-
-                          <li><a href="#">Unique Features</a></li>
-
-                        </ul>
-                      </li>
-                      <li class="col-md-3">
-                        <ul>
-                          <li class="dropdown-header">Man's</li>
-                          <li><a href="#">Unique Features</a></li>
-                          <li><a href="#">Image Responsive</a></li>
-                          <li><a href="#">Four columns</a></li>
-                          <li><a href="#">Auto Carousel</a></li>
-                          <li><a href="#">Newsletter Form</a></li>
-                          <li><a href="#">Four columns</a></li>
-                          <li><a href="#">Good Typography</a></li>
-                        </ul>
-                      </li>
-                      <li class="col-md-3">
-                        <ul>
-                          <li class="dropdown-header">Children's</li>
-                          <li><a href="#">Unique Features</a></li>
-                          <li><a href="#">Four columns</a></li>
-                          <li><a href="#">Image Responsive</a></li>
-                          <li><a href="#">Auto Carousel</a></li>
-                          <li><a href="#">Newsletter Form</a></li>
-                          <li><a href="#">Four columns</a></li>
-                          <li><a href="#">Good Typography</a></li>
-                        </ul>
-                      </li>
+                        @foreach($category as $key => $danhmuc)
+                            <li class="col-md-3">
+                                @if($danhmuc->category_parent==0)
+                                <ul>
+                                <li class="dropdown-header">{{$danhmuc->category_name}}</li>
+                                @foreach($category as $key => $danhmuc1)
+                                    @if($danhmuc1->category_parent==$danhmuc->category_id)
+                                        <li><a href="{{URL::to('/danh-muc/'.$danhmuc1->slug_category_product)}}">{{$danhmuc1->category_name}}</a></li>
+                                    @endif
+                                @endforeach
+                                </ul>
+                                @endif
+                            </li>
+                        @endforeach
                       <li class="col-md-3">
                         <ul>
                           <li id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -480,31 +461,36 @@
                 var cart_product_id = $('.cart_product_id_' + id).val();
                 var cart_product_name = $('.cart_product_name_' + id).val();
                 var cart_product_image = $('.cart_product_image_' + id).val();
+                var cart_product_quantity = $('.cart_product_quantity_' + id).val();
                 var cart_product_price = $('.cart_product_price_' + id).val();
                 var cart_product_qty = $('.cart_product_qty_' + id).val();
                 var _token = $('input[name="_token"]').val();
                 // alert( 'Đã thêm vào giỏ hàng');
                 // alert( cart_product_name);
-                $.ajax({
-                    url: '{{url('/add-cart-ajax')}}',
-                    method: 'POST',
-                    data:{cart_product_id:cart_product_id,cart_product_name:cart_product_name,cart_product_image:cart_product_image,cart_product_price:cart_product_price,cart_product_qty:cart_product_qty,_token:_token},
-                    success:function(data){
-                        swal({
-                                title: "Đã thêm sản phẩm vào giỏ hàng",
-                                text: "Bạn có thể mua hàng tiếp hoặc tới giỏ hàng để tiến hành thanh toán",
-                                showCancelButton: true,
-                                cancelButtonText: "Xem tiếp",
-                                confirmButtonClass: "btn-success",
-                                confirmButtonText: "Đi đến giỏ hàng",
-                                closeOnConfirm: false
-                            },
-                            function() {
-                                window.location.href = "{{url('/gio-hang')}}";
-                            });
-                    }
+                if(parseInt(cart_product_qty)>parseInt(cart_product_quantity)){
+                    alert('Làm ơn đặt nhỏ hơn ' + cart_product_quantity);
+                }else{
+                    $.ajax({
+                        url: '{{url('/add-cart-ajax')}}',
+                        method: 'POST',
+                        data:{cart_product_id:cart_product_id,cart_product_name:cart_product_name,cart_product_image:cart_product_image,cart_product_price:cart_product_price,cart_product_qty:cart_product_qty,_token:_token},
+                        success:function(data){
+                            swal({
+                                    title: "Đã thêm sản phẩm vào giỏ hàng",
+                                    text: "Bạn có thể mua hàng tiếp hoặc tới giỏ hàng để tiến hành thanh toán",
+                                    showCancelButton: true,
+                                    cancelButtonText: "Xem tiếp",
+                                    confirmButtonClass: "btn-success",
+                                    confirmButtonText: "Đi đến giỏ hàng",
+                                    closeOnConfirm: false
+                                },
+                                function() {
+                                    window.location.href = "{{url('/gio-hang')}}";
+                                });
+                        }
 
-                });
+                    });
+                }
             });
         });
     </script>

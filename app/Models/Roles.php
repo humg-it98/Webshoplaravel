@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Roles extends Model
@@ -14,6 +15,6 @@ class Roles extends Model
  	protected $table = 'tbl_roles';
 
  	public function admin(){
- 		return $this->belongsToMany('App\Admin');
+ 		return $this->belongsToMany('App\Models\Admin');
  	}
 }

@@ -4,11 +4,21 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use App\Models\Coupon;
+use Auth;
 use Session;
 
 class CouponController extends Controller
 {
+    public function AuthLogin(){
+        $admin_id = Auth::id();
+        if($admin_id){
+            return Redirect::to('dashboard');
+        }else{
+            return Redirect::to('admin')->send();
+        }
+    }
     public function check_coupon(Request $request){
+        $this->AuthLogin();
         $data = $request->all();
         $coupon = Coupon::where('coupon_code',$data['coupon'])->first();
         if($coupon){
@@ -44,9 +54,11 @@ class CouponController extends Controller
         }
     }
     public function insert_coupon(){
+        $this->AuthLogin();
     	return view('admin.coupon.insert_coupon');
     }
     public function insert_coupon_code(Request $request){
+        $this->AuthLogin();
         $data=$request->all();
         $coupon = new Coupon;
 
@@ -62,10 +74,12 @@ class CouponController extends Controller
 
     }
     public function list_coupon(){
+        $this->AuthLogin();
     	$coupon = Coupon::orderby('coupon_id','DESC')->paginate(5);
     	return view('admin.coupon.list_coupon')->with(compact('coupon'));
     }
     public function delete_coupon($coupon_id){
+        $this->AuthLogin();
     	$coupon = Coupon::find($coupon_id);
     	$coupon->delete();
     	Session::put('message','Xóa mã giảm giá thành công');

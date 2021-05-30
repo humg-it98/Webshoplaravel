@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/','HomeController@index');
 Route::get('/trang-chu','HomeController@index');
 Route::post('/tim-kiem','HomeController@search');
+Route::get('/404','HomeController@error_page');
 
 /*Back-end*/
 Route::get('/admin','AdminController@index');
@@ -164,6 +165,31 @@ Route::post('/update-qty','OrderController@update_qty');
 
 //sent-mail
 Route::get('/send-mail','HomeController@send_mail');
+
+//Phân quyền
+Route::get('/register-auth','AuthController@register_auth');
+Route::get('/login-auth','AuthController@login_auth');
+Route::post('/register','AuthController@register');
+Route::post('/login','AuthController@login');
+Route::get('/logout-auth','AuthController@logout_auth');
+
+Route::group(['middleware' => 'auth.roles'], function () {
+	Route::get('/add-product','ProductController@add_product');
+	Route::get('/edit-product/{product_id}','ProductController@edit_product');
+});
+
+Route::get('users','UserController@index')->middleware('auth.roles');
+Route::get('add-users','UserController@add_users')->middleware('auth.roles');
+Route::get('delete-user-roles/{admin_id}','UserController@delete_user_roles')->middleware('auth.roles');
+Route::post('store-users','UserController@store_users')->middleware('auth.roles');
+Route::post('assign-roles','UserController@assign_roles');
+
+Route::get('impersonate/{admin_id}','UserController@impersonate');
+Route::get('impersonate-destroy','UserController@impersonate_destroy');
+
+
+
+
 
 
 
