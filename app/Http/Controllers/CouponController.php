@@ -44,7 +44,7 @@ class CouponController extends Controller
         }
     }
     public function insert_coupon(){
-    	return view('pages.coupon.insert_coupon');
+    	return view('admin.coupon.insert_coupon');
     }
     public function insert_coupon_code(Request $request){
         $data=$request->all();
@@ -63,7 +63,7 @@ class CouponController extends Controller
     }
     public function list_coupon(){
     	$coupon = Coupon::orderby('coupon_id','DESC')->paginate(5);
-    	return view('pages.coupon.list_coupon')->with(compact('coupon'));
+    	return view('admin.coupon.list_coupon')->with(compact('coupon'));
     }
     public function delete_coupon($coupon_id){
     	$coupon = Coupon::find($coupon_id);

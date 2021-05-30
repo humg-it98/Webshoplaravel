@@ -336,8 +336,8 @@
         <div class="col-sm-8 col-lg-9 mtb_20">
             @foreach($product_details as $key => $value)
             <div class="row mt_10 ">
-                <form action="{{URL::to('/save-cart')}}" method="POST">
-                    {{ csrf_field() }}
+                <form action="" method="POST">
+                   @csrf
                     <div class="col-md-4">
                         <div class="img_product"><a class="thumbnails" href="{{URL::to('public/uploads/product/'.$value->product_image)}}"> <img data-name="product_image" src="{{URL::to('public/uploads/product/'.$value->product_image)}}" alt=""  /></a></div>
                         <div id="product-thumbnail" class="owl-carousel">
@@ -388,7 +388,7 @@
                                     <span> {{$value->product_quantity}} sản phẩm</span></li>
                                 </ul>
                                 <hr>
-                                <p class="product-desc mtb_30"><b>Mô tả sản phẩm:</b> {!!$value->product_desc!!} </p>
+                                <p class="product-desc mtb_30"><b>Mô tả sản phẩm:</b>{!!$value->product_desc!!} </p>
                                 <div id="product">
                                 <div class="form-group">
                                     <div class="row">
@@ -404,24 +404,21 @@
                                         <select name="product_color" id="select-by-size" class="selectpicker form-control">
                                         <option>36</option>
                                         <option>37</option>
-                                        <option>38</option>
-                                        <option>39</option>
-                                        <option>40</option>
-                                        <option>41</option>
-                                        <option>42</option>
-                                        <option>43</option>
-                                        <option>44</option>
                                         </select>
                                     </div>
                                     </div>
                                 </div>
                                 <div class="qty mt_30 form-group2">
                                     <label>Số lượng:</label>
-                                    <input name="qty" min="1" value="1" type="number">
-                                    <input name="productid_hidden" type="hidden" value="{{$value->product_id}}">
+                                    <input class="cart_product_qty_{{$value->product_id}}" name="qty" min="1" value="1" type="number">
+                                    <input class="cart_product_id_{{$value->product_id}}" type="hidden" value="{{$value->product_id}}">
+                                    <input class="cart_product_name_{{$value->product_id}}" type="hidden" value="{{$value->product_name}}">
+                                    <input class="cart_product_image_{{$value->product_id}}" type="hidden" value="{{$value->product_image}}">
+                                    <input class="cart_product_price_{{$value->product_id}}" type="hidden" value="{{$value->product_price}}">
+                                    <input class="cart_product_quantity_{{$value->product_id}}" type="hidden" value="{{$value->product_quantity}}">
                                 </div>
                                 <div class="button-group mt_30">
-                                    <button tyle="submit" class="add-to-cart"><span>Thêm giỏ hàng</span></button>
+                                    <button type="button" class="btn btn-default add-to-cart" name="add-to-cart" data-id_product="{{$value->product_id}}"><span>Thêm giỏ hàng</span></button>
                                     <div class="wishlist"><a href="#"><span>wishlist</span></a></div>
                                     <div class="compare"><a href="#"><span>Compare</span></a></div>
                                 </div>
